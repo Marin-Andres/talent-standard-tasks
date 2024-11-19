@@ -167,6 +167,17 @@ export default class AccountProfile extends React.Component {
                                             /> */}
                                         </FormItemWrapper>
                                         <FormItemWrapper
+                                            title='Description'
+                                            tooltip='Please provide a short summary about yourself'
+                                        >
+                                            <SelfIntroduction
+                                                summary={this.state.profileData.summary}
+                                                description={this.state.profileData.description}
+                                                updateProfileData={this.updateAndSaveData}
+                                                updateWithoutSave={this.updateWithoutSave}
+                                            />
+                                        </FormItemWrapper>
+                                        <FormItemWrapper
                                             title='User Details'
                                             tooltip='Enter your contact details'
                                         >
@@ -293,13 +304,7 @@ export default class AccountProfile extends React.Component {
                                                 updateProfileData={this.updateWithoutSave}
                                                 saveCVUrl={'http://localhost:60290/profile/profile/updateTalentCV'}
                                             />
-                                        </FormItemWrapper> 
-                                        <SelfIntroduction
-                                            summary={this.state.profileData.summary}
-                                            description={this.state.profileData.description}
-                                            updateProfileData={this.updateAndSaveData}
-                                            updateWithoutSave={this.updateWithoutSave}
-                                        />*/}
+                                        </FormItemWrapper> */}
                                     </div>
                                 </form>
                             </div >
