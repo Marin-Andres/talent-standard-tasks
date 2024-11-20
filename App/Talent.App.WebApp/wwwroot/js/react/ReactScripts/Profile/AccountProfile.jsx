@@ -24,6 +24,10 @@ export default class AccountProfile extends React.Component {
 
         this.state = {
             profileData: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: '',
                 address: {},
                 nationality: '',
                 education: [],
@@ -80,12 +84,9 @@ export default class AccountProfile extends React.Component {
                 dataType: "json",
                 success: function (res) {
                     this.updateWithoutSave(res.data)
-                    console.log("res.data", res.data);
                 }.bind(this),
-                error: function (res, a, b) {
-                    console.log("res", res)
-                    console.log("a", a)
-                    console.log("b", b)
+                error: function (res) {
+                    console.log(res.status)
                 }
             })
             this.init()
@@ -111,7 +112,14 @@ export default class AccountProfile extends React.Component {
     }
 
     updateForComponentId(componentId, newValues) {
-        this.updateAndSaveData(newValues)
+        let data = {};
+        if (componentId === 'contactDetails') {
+            this.updateAndSaveData(newValues);
+        }
+        else {
+            data[componentId] = newValues;
+            this.updateAndSaveData(newValues)
+        }
     }
 
     saveProfile() {
@@ -125,18 +133,15 @@ export default class AccountProfile extends React.Component {
             type: "POST",
             data: JSON.stringify(this.state.profileData),
             success: function (res) {
-                console.log(res)
                 if (res.success == true) {
-                    TalentUtil.notification.show("Profile updated sucessfully", "success", null, null)
+                    TalentUtil.notification.show("Profile updated successfully", "success", null, null)
                 } else {
                     TalentUtil.notification.show("Profile did not update successfully", "error", null, null)
                 }
 
             }.bind(this),
-            error: function (res, a, b) {
-                console.log(res)
-                console.log(a)
-                console.log(b)
+            error: function (res) {
+                TalentUtil.notification.show("Error while saving Employer details", "error", null, null);
             }
         })
     }

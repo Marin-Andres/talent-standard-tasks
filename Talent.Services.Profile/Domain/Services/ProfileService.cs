@@ -51,45 +51,97 @@ namespace Talent.Services.Profile.Domain.Services
 
         public async Task<TalentProfileViewModel> GetTalentProfile(string Id)
         {
-            User profile = null;
-            profile = (await _userRepository.GetByIdAsync(Id));
+            try
+            { 
+                User profile = null;
+                profile = (await _userRepository.GetByIdAsync(Id));
 
-            if (profile != null)
-            {
-                var languages = profile.Languages.Select(x => ViewModelFromLanguage(x)).ToList();
-                var skills = profile.Skills.Select(x => ViewModelFromSkill(x)).ToList();
-                var experience = profile.Experience.Select(x => ViewModelFromExperience(x)).ToList();
-
-                var result = new TalentProfileViewModel
+                if (profile != null)
                 {
-                    Id = profile.Id,
-                    FirstName = profile.FirstName,
-                    LastName = profile.LastName,
-                    Email = profile.Email,
-                    Phone = profile.Phone,
-                    Address = profile.Address,
-                    Nationality = profile.Nationality,
-                    VisaStatus = profile.VisaStatus,
-                    VisaExpiryDate = profile.VisaExpiryDate,
-                    ProfilePhoto = profile.ProfilePhoto,
-                    Summary = profile.Summary,
-                    Description = profile.Description,
-                    LinkedAccounts = profile.LinkedAccounts,
-                    JobSeekingStatus = profile.JobSeekingStatus,
-                    Languages = languages,
-                    Skills = skills,
-                    Experience = experience,
-                };
-                return result;
-            }
+                    var languages = profile.Languages.Select(x => ViewModelFromLanguage(x)).ToList();
+                    var skills = profile.Skills.Select(x => ViewModelFromSkill(x)).ToList();
+                    var experience = profile.Experience.Select(x => ViewModelFromExperience(x)).ToList();
 
-            return null;
+                    var result = new TalentProfileViewModel
+                    {
+                        Id = profile.Id,
+                        FirstName = profile.FirstName,
+                        LastName = profile.LastName,
+                        Email = profile.Email,
+                        Phone = profile.Phone,
+                        Address = profile.Address,
+                        Nationality = profile.Nationality,
+                        VisaStatus = profile.VisaStatus,
+                        VisaExpiryDate = profile.VisaExpiryDate,
+                        ProfilePhoto = profile.ProfilePhoto,
+                        Summary = profile.Summary,
+                        Description = profile.Description,
+                        LinkedAccounts = profile.LinkedAccounts,
+                        JobSeekingStatus = profile.JobSeekingStatus,
+                        Languages = languages,
+                        Skills = skills,
+                        Experience = experience,
+                    };
+                    return result;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
-        public async Task<bool> UpdateTalentProfile(TalentProfileViewModel model, string updaterId)
+        public async Task<bool> UpdateTalentProfile(TalentProfileViewModel talentUser, string updaterId)
         {
-            //Your code here;
-            throw new NotImplementedException();
+            try
+            {
+                if (talentUser.Id != null)
+                {
+                    User existingTalent = (await _userRepository.GetByIdAsync(talentUser.Id));
+                    existingTalent.FirstName = talentUser.FirstName;
+                    existingTalent.LastName = talentUser.LastName;
+                    existingTalent.Email = talentUser.Email;
+                    existingTalent.Phone = talentUser.Phone;
+                    existingTalent.Address = talentUser.Address;
+                    existingTalent.Nationality = talentUser.Nationality;
+                    existingTalent.VisaStatus = talentUser.VisaStatus;
+                    existingTalent.VisaExpiryDate = talentUser.VisaExpiryDate;
+                    existingTalent.ProfilePhoto = talentUser.ProfilePhoto;
+                    existingTalent.Summary = talentUser.Summary;
+                    existingTalent.Description = talentUser.Description;
+                    existingTalent.LinkedAccounts = talentUser.LinkedAccounts;
+                    existingTalent.JobSeekingStatus = talentUser.JobSeekingStatus;
+
+                    existingTalent.UpdatedBy = updaterId;
+                    existingTalent.UpdatedOn = DateTime.Now;
+
+                    var newSkills = new List<UserSkill>();
+                    foreach (var item in talentUser.Skills)
+                    {
+                        var skill = existingTalent.Skills.SingleOrDefault(x => x.Id == item.Id);
+                        if (skill == null)
+                        {
+                            skill = new UserSkill
+                            {
+                                Id = ObjectId.GenerateNewId().ToString(),
+                                IsDeleted = false
+                            };
+                        }
+                        UpdateSkillFromView(item, skill);
+                        newSkills.Add(skill);
+                    }
+                    existingTalent.Skills = newSkills;
+                    // TODO add logic to update languages and experience similar to skills
+                    await _userRepository.Update(existingTalent);
+                    return true;
+                }
+                return false;
+            }
+            catch (MongoException e)
+            {
+                return false;
+            }
         }
 
         public async Task<EmployerProfileViewModel> GetEmployerProfile(string Id, string role)
