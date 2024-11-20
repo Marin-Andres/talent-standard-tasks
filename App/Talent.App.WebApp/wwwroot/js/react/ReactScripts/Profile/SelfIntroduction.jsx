@@ -8,9 +8,6 @@ export default class SelfIntroduction extends React.Component {
     };
 
     
-
-
-
     render() {
         return (
             <div className='ui sixteen wide column'>
@@ -18,6 +15,7 @@ export default class SelfIntroduction extends React.Component {
                     <input
                         placeholder="Please provide a short summary about yourself"
                         maxLength="150"
+                        value = {this.props.summary}
                     />
                     <label>Summary must be no more than 150 characters.</label>
                 </div>
@@ -25,11 +23,7 @@ export default class SelfIntroduction extends React.Component {
                     <textarea
                         placeholder="Please tell us about any hobbies, additional expertise, or anything else you’d like to add."
                         maxLength="600"
-                        style={{ 
-                            minHeight: 100,
-                            width: '100%',
-                            resize: 'none',
-                        }}
+                        value={this.props.description}
                     />
                     <label>Description must be between 150-600 characters.</label>
                 </div>
