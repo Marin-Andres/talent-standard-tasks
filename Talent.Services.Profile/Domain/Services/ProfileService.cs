@@ -51,9 +51,39 @@ namespace Talent.Services.Profile.Domain.Services
 
         public async Task<TalentProfileViewModel> GetTalentProfile(string Id)
         {
-            //Your code here;
+            User profile = null;
+            profile = (await _userRepository.GetByIdAsync(Id));
+
+            if (profile != null)
+            {
+                var languages = profile.Languages.Select(x => ViewModelFromLanguage(x)).ToList();
+                var skills = profile.Skills.Select(x => ViewModelFromSkill(x)).ToList();
+                var experience = profile.Experience.Select(x => ViewModelFromExperience(x)).ToList();
+
+                var result = new TalentProfileViewModel
+                {
+                    Id = profile.Id,
+                    FirstName = profile.FirstName,
+                    LastName = profile.LastName,
+                    Email = profile.Email,
+                    Phone = profile.Phone,
+                    Address = profile.Address,
+                    Nationality = profile.Nationality,
+                    VisaStatus = profile.VisaStatus,
+                    VisaExpiryDate = profile.VisaExpiryDate,
+                    ProfilePhoto = profile.ProfilePhoto,
+                    Summary = profile.Summary,
+                    Description = profile.Description,
+                    LinkedAccounts = profile.LinkedAccounts,
+                    JobSeekingStatus = profile.JobSeekingStatus,
+                    Languages = languages,
+                    Skills = skills,
+                    Experience = experience,
+                };
+                return result;
+            }
+
             return null;
-            //throw new NotImplementedException();
         }
 
         public async Task<bool> UpdateTalentProfile(TalentProfileViewModel model, string updaterId)
@@ -334,6 +364,29 @@ namespace Talent.Services.Profile.Domain.Services
             };
         }
 
+        protected AddLanguageViewModel ViewModelFromLanguage(UserLanguage language)
+        {
+            return new AddLanguageViewModel
+            {
+                Id = language.Id,
+                Name = language.Language,
+                Level = language.LanguageLevel,
+                CurrentUserId = language.UserId,
+            };
+        }
+
+        protected ExperienceViewModel ViewModelFromExperience(UserExperience experience)
+        {
+            return new ExperienceViewModel
+            {
+                Id = experience.Id,
+                Company = experience.Company,
+                Position = experience.Position,
+                Responsibilities = experience.Responsibilities,
+                Start = experience.Start,
+                End = experience.End,
+            };
+        }
         #endregion
 
         #endregion

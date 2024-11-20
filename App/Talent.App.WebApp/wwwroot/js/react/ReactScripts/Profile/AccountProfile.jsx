@@ -69,7 +69,6 @@ export default class AccountProfile extends React.Component {
     loadData() {
         try {
             var cookies = Cookies.get('talentAuthToken');
-            console.log("here");
             $.ajax({
                 url: 'http://localhost:60290/profile/profile/getTalentProfile',
                 headers: {
@@ -81,6 +80,7 @@ export default class AccountProfile extends React.Component {
                 dataType: "json",
                 success: function (res) {
                     this.updateWithoutSave(res.data)
+                    console.log("res.data", res.data);
                 }.bind(this),
                 error: function (res, a, b) {
                     console.log("res", res)
@@ -168,7 +168,7 @@ export default class AccountProfile extends React.Component {
                                         </FormItemWrapper>
                                         <FormItemWrapper
                                             title='Description'
-                                            tooltip='Please provide a short summary about yourself'
+                                            tooltip='Enter your summary and description '
                                         >
                                             <SelfIntroduction
                                                 summary={this.state.profileData.summary}
