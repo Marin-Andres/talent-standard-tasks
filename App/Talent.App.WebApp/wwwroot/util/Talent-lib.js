@@ -96,3 +96,11 @@ TalentUtil.deepCopy = function (object) {
 TalentUtil.phoneRegExp = function () {
     return /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 }
+
+TalentUtil.linkedInRegExp = function () {
+    return /^(http(s)?:\/\/)?(www\.)?linkedin\.([a-z]+)\/in\/[\p{L}\p{N}\p{M}_-]{3,100}\/?$/
+}
+
+TalentUtil.githubRegExp = function () {
+    return /^(http(s)?:\/\/)?(www\.)?github\.com\/([a-zA-Z0-9._-]+)\/?$/
+}
