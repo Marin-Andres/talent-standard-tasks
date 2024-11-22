@@ -174,11 +174,11 @@ export default class AccountProfile extends React.Component {
                                             title='Linked Accounts'
                                             tooltip='Linking to online social networks adds credibility to your profile'
                                         >
-                                            {/* <SocialMediaLinkedAccount
+                                            <SocialMediaLinkedAccount
                                                 linkedAccounts={this.state.profileData.linkedAccounts}
                                                 updateProfileData={this.updateWithoutSave}
                                                 saveProfileData={this.updateAndSaveData}
-                                            /> */}
+                                            /> 
                                         </FormItemWrapper>
                                         <FormItemWrapper
                                             title='Description'
