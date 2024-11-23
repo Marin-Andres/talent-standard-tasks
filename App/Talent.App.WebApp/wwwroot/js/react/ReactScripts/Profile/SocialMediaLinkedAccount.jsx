@@ -57,12 +57,8 @@ export default class SocialMediaLinkedAccount extends React.Component {
 
     saveData() {
         try {
-            const data = Object.assign({}, this.state.newData);
-            const { linkedIn, github } = data;
-            const formData = { linkedIn, github };
-      
-            const valid = this.schema.validateSync(formData);
-            this.props.updateProfileData(this.props.componentId, data);
+            const valid = this.schema.validateSync(this.state.newData);
+            this.props.updateProfileData(this.props.componentId, this.state.newData);
             this.closeEdit();
           } catch (error) {
             console.log("error",error);
