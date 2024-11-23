@@ -2,6 +2,7 @@
 import Cookies from 'js-cookie'
 import { default as Countries } from '../../../../util/jsonFiles/countries.json';
 import { ChildSingleInput } from '../Form/SingleInput.jsx';
+import { Select } from '../Form/Select.jsx'
 import * as Yup from 'yup';
 
 export class Address extends React.Component {
@@ -14,11 +15,10 @@ export class Address extends React.Component {
                 number: "",
                 street: "",
                 suburb: "",
-                postcode: "",
+                postCode: "",
                 city: "",
                 country: "",
             }
-        
         this.state = {
             showEditSection: false,
             newData: address
@@ -28,7 +28,7 @@ export class Address extends React.Component {
             number: Yup.string().required('Address number required.'),
             street: Yup.string().required('Street name required.'),
             suburb: Yup.string().required('Suburb required.'),
-            postcode: Yup.number().required('Postal code required'),
+            postCode: Yup.number().required('Postal code required'),
             city: Yup.string().required('City required.'),
             country: Yup.string().required('Country required.'),
         })
@@ -75,14 +75,108 @@ export class Address extends React.Component {
     }
 
     renderEdit() {
+        const countries = [{value: "0", title: "Costa Rica"}];
+        const cities = [{value: "0", title: "Heredia"}];
         return (
-            <p>Edit</p>
+        <div className="ui grid">
+            <div className='row'>
+                <div className='ui four wide column'>
+                    <ChildSingleInput
+                        inputType="text"
+                        label="Number"
+                        name="number"
+                        value={this.state.newData.number}
+                        controlFunc={this.handleChange}
+                        maxLength={10}
+                        placeholder="Street number"
+                        errorMessage="Please enter a valid street number"
+                    />
+                </div>
+                <div className='ui eight wide column'>
+                    <ChildSingleInput
+                        inputType="text"
+                        label="Street"
+                        name="street"
+                        value={this.state.newData.street}
+                        controlFunc={this.handleChange}
+                        maxLength={40}
+                        placeholder="Street name"
+                        errorMessage="Please enter a valid street name"
+                    />
+                </div>
+                <div className='ui four wide column'>
+                    <ChildSingleInput
+                        inputType="text"
+                        label="Suburb"
+                        name="suburb"
+                        value={this.state.newData.suburb}
+                        controlFunc={this.handleChange}
+                        maxLength={20}
+                        placeholder="Suburb"
+                        errorMessage="Please enter a valid suburb"
+                    />
+                </div>
+            </div>
+            <div className="row">
+                <div className='ui six wide column'>
+                    <div className="field">
+                        <label>Country</label>
+                        <Select
+                            name="country"
+                            selectedOption={this.state.newData.country}
+                            controlFunc={this.handleChange}
+                            options={countries}
+                            placeholder="Country"
+                        />
+                    </div>
+                </div>
+                <div className='ui six wide column'>
+                <div className="field">
+                        <label>Country</label>
+                        <Select
+                            name="city"
+                            selectedOption={this.state.newData.city}
+                            controlFunc={this.handleChange}
+                            options={cities}
+                            placeholder="City"
+                        />
+                    </div>
+                </div>
+                <div className='ui four wide column'>
+                    <ChildSingleInput
+                        inputType="text"
+                        label="Post Code"
+                        name="postCode"
+                        value={this.state.newData.postCode}
+                        controlFunc={this.handleChange}
+                        maxLength={12}
+                        placeholder="Post Code"
+                        errorMessage="Please enter a valid post code"
+                    />
+                </div>
+            </div>
+        </div>
         )
     }
 
     renderDisplay() {
+        let streetAddress = this.props.addressData ? 
+            `${this.props.addressData.number} ${this.props.addressData.street} ${this.props.addressData.suburb} ${this.props.addressData.postCode}` 
+            : "";
+        let city = this.props.addressData ? this.props.addressData.city : "" ;
+        let country = this.props.addressData ? this.props.addressData.country : "" ;
+
         return (
-            <p>Display</p>
+            <div className='row'>
+            <div className="ui sixteen wide column">
+                <React.Fragment>
+                    <p>Address: {streetAddress}</p>
+                    <p>City: {city}</p>
+                    <p>Country: {country}</p>
+                </React.Fragment>
+                <button type="button" className="ui right floated teal button" onClick={this.openEdit}>Edit</button>
+        </div>
+      </div>
         )
     }
    
