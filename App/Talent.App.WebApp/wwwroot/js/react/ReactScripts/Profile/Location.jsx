@@ -66,7 +66,7 @@ export class Address extends React.Component {
     saveData() {
         try {
             const valid = this.schema.validateSync(this.state.newData);
-            this.props.updateProfileData(this.props.componentId, data);
+            this.props.updateProfileData(this.props.componentId, this.state.newData);
             this.closeEdit();
           } catch (error) {
             console.log("error",error);
@@ -75,8 +75,8 @@ export class Address extends React.Component {
     }
 
     renderEdit() {
-        const countries = [{value: "0", title: "Costa Rica"}];
-        const cities = [{value: "0", title: "Heredia"}];
+        const countries = Object.keys(Countries).map(c => ({value: c, title: c}));
+        const cities = (this.state.newData.country === "") ? [] : Countries[this.state.newData.country].map(c => ({value: c, title: c}));
         return (
         <div className="ui grid">
             <div className='row'>
@@ -154,6 +154,10 @@ export class Address extends React.Component {
                         errorMessage="Please enter a valid post code"
                     />
                 </div>
+            </div>
+            <div className='row'>
+                <button type="button" className="ui teal button" onClick={this.saveData}>Save</button>
+                <button type="button" className="ui button" onClick={this.closeEdit}>Cancel</button>
             </div>
         </div>
         )
