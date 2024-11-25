@@ -76,7 +76,8 @@ export class Address extends React.Component {
 
     renderEdit() {
         const countries = Object.keys(Countries).map(c => ({value: c, title: c}));
-        const cities = (this.state.newData.country === "") ? [] : Countries[this.state.newData.country].map(c => ({value: c, title: c}));
+        const cities = (this.state.newData.country === "") ? [] : Countries[this.state.newData.country];
+        const uniqCities = [...new Set(cities)].map(c => ({value: c, title: c}));;
         return (
         <div className="ui grid">
             <div className='row'>
@@ -137,7 +138,7 @@ export class Address extends React.Component {
                             name="city"
                             selectedOption={this.state.newData.city}
                             controlFunc={this.handleChange}
-                            options={cities}
+                            options={uniqCities}
                             placeholder="City"
                         />
                     </div>
