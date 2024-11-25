@@ -137,6 +137,7 @@ export default class AccountProfile extends React.Component {
                     TalentUtil.notification.show("Profile updated successfully", "success", null, null)
                 } else {
                     TalentUtil.notification.show("Profile did not update successfully", "error", null, null)
+                    console.log("profileData",this.state.profileData);
                 }
 
             }.bind(this),
@@ -205,10 +206,10 @@ export default class AccountProfile extends React.Component {
                                             title='Nationality'
                                             tooltip='Select your nationality'
                                         >
-                                            {/* <Nationality
+                                            <Nationality
                                                 nationalityData={this.state.profileData.nationality}
                                                 saveProfileData={this.updateAndSaveData}
-                                            /> */}
+                                            />
                                         </FormItemWrapper>
                                         <FormItemWrapper
                                             title='Languages'

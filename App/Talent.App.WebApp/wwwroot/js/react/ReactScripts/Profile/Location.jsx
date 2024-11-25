@@ -71,7 +71,7 @@ export class Address extends React.Component {
           } catch (error) {
             console.log("error",error);
             TalentUtil.notification.show(error, "error", null, null);
-          }
+        }
     }
 
     renderEdit() {
@@ -196,12 +196,38 @@ export class Address extends React.Component {
 export class Nationality extends React.Component {
     constructor(props) {
         super(props)
-       
+
+        this.state = {
+            nationality: this.props.nationality ? this.props.nationality : ""
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event){
+        if (event.target.value) {
+            const newData = {};
+            newData[event.target.name] = event.target.value;
+            this.props.saveProfileData(newData);
+            this.setState({nationality: event.target.value});
+        }
+        else {
+            TalentUtil.notification.show("Invalid nationality", "error", null, null);
+        }
     }
 
     
     render() {
+        const countries = Object.keys(Countries).map(c => ({value: c, title: c}));
 
-        
+        return(
+            <Select
+                            name="nationality"
+                            selectedOption={this.state.nationality}
+                            controlFunc={this.handleChange}
+                            options={countries}
+                            placeholder="Select your nationality"
+                        />
+        )
     }
 }
