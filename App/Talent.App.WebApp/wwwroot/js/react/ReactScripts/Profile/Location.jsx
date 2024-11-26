@@ -200,10 +200,6 @@ export class Nationality extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            nationality: this.props.nationality ? this.props.nationality : ""
-        };
-
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -212,7 +208,6 @@ export class Nationality extends React.Component {
             const newData = {};
             newData[event.target.name] = event.target.value;
             this.props.saveProfileData(newData);
-            this.setState({nationality: event.target.value});
         }
         else {
             TalentUtil.notification.show("Invalid nationality", "error", null, null);
@@ -226,7 +221,7 @@ export class Nationality extends React.Component {
         return(
             <Select
                             name="nationality"
-                            selectedOption={this.state.nationality}
+                            selectedOption={this.props.nationalityData}
                             controlFunc={this.handleChange}
                             options={countries}
                             placeholder="Select your nationality"
