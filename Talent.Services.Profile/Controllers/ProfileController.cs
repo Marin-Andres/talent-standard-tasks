@@ -169,32 +169,55 @@ namespace Talent.Services.Profile.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<IActionResult> GetSkills()
         {
-            //Your code here;
-            throw new NotImplementedException();
+            String talentId = _userAppContext.CurrentUserId;
+            var userProfile = await _profileService.GetTalentProfile(talentId);
+
+            return Json(new { Success = true, data = userProfile.Skills });
         }
 
         [HttpPost("addSkill")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
-        public ActionResult AddSkill([FromBody]AddSkillViewModel skill)
+        public async Task<IActionResult> AddSkill([FromBody] AddSkillViewModel skill)
         {
-            //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                if (await _profileService.AddUpdateSkill(skill, talentId))
+                {
+                    return Json(new { Success = true });
+                }
+            }
+            return Json(new { Success = false });
         }
 
         [HttpPost("updateSkill")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<IActionResult> UpdateSkill([FromBody]AddSkillViewModel skill)
         {
-            //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                if (await _profileService.AddUpdateSkill(skill, talentId))
+                {
+                    return Json(new { Success = true });
+                }
+            }
+            return Json(new { Success = false });
         }
 
         [HttpPost("deleteSkill")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<IActionResult> DeleteSkill([FromBody]AddSkillViewModel skill)
         {
-            //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                if (await _profileService.DeleteSkill(skill, talentId))
+                {
+                    return Json(new { Success = true });
+                }
+            }
+            return Json(new { Success = false });
         }
 
         [HttpGet("getCertification")]

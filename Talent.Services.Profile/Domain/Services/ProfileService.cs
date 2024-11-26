@@ -49,6 +49,94 @@ namespace Talent.Services.Profile.Domain.Services
             throw new NotImplementedException();
         }
 
+        public async Task<bool> AddUpdateSkill(AddSkillViewModel newSkill, string userId)
+        {
+            try
+            {
+                if (userId != null)
+                {
+                    User existingTalent = (await _userRepository.GetByIdAsync(userId));
+
+                    existingTalent.UpdatedBy = userId;
+                    existingTalent.UpdatedOn = DateTime.Now;
+
+                    bool isNewSkill = true;
+                    var newSkills = new List<UserSkill>();
+                    foreach (var item in existingTalent.Skills)
+                    {
+                        if (item.Id == newSkill.Id)
+                        {
+                            UpdateSkillFromView(newSkill, item);
+                            isNewSkill = false;
+                        }
+                        newSkills.Add(item);
+                    }
+
+                    if (isNewSkill)
+                    {
+                        var skill = new UserSkill
+                        {
+                            Id = ObjectId.GenerateNewId().ToString(),
+                            IsDeleted = false,
+                            UserId = existingTalent.Id
+                        };
+                        newSkills.Add(skill);
+                    }
+
+                    existingTalent.Skills = newSkills;
+                    await _userRepository.Update(existingTalent);
+                    return true;
+                }
+                return false;
+            }
+            catch (MongoException e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteSkill(AddSkillViewModel skill, string userId)
+        {
+            try
+            {
+                if (userId != null)
+                {
+                    User existingTalent = (await _userRepository.GetByIdAsync(userId));
+
+                    existingTalent.UpdatedBy = userId;
+                    existingTalent.UpdatedOn = DateTime.Now;
+
+                    bool skillFound = false;
+                    var newSkills = new List<UserSkill>();
+                    foreach (var item in existingTalent.Skills)
+                    {
+                        if (item.Id == skill.Id)
+                        {
+                            item.IsDeleted = true;
+                            skillFound = true;
+                        }
+                        newSkills.Add(item);
+                    }
+                    if (skillFound)
+                    {
+                        existingTalent.Skills = newSkills;
+                        await _userRepository.Update(existingTalent);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                    
+                }
+                return false;
+            }
+            catch (MongoException e)
+            {
+                return false;
+            }
+        }
+
         public async Task<TalentProfileViewModel> GetTalentProfile(string Id)
         {
             try
@@ -125,7 +213,8 @@ namespace Talent.Services.Profile.Domain.Services
                             skill = new UserSkill
                             {
                                 Id = ObjectId.GenerateNewId().ToString(),
-                                IsDeleted = false
+                                IsDeleted = false,
+                                UserId = existingTalent.Id
                             };
                         }
                         UpdateSkillFromView(item, skill);
