@@ -147,7 +147,6 @@ export default class AccountProfile extends React.Component {
                     this.loadData();                    
                 } else {
                     TalentUtil.notification.show("Profile did not update successfully", "error", null, null)
-                    console.log("profileData",this.state.profileData);
                 }
 
             }.bind(this),
