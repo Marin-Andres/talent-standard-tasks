@@ -80,6 +80,7 @@ namespace Talent.Services.Profile.Domain.Services
                             IsDeleted = false,
                             UserId = existingTalent.Id
                         };
+                        UpdateSkillFromView(newSkill, skill);
                         newSkills.Add(skill);
                     }
 
