@@ -141,7 +141,7 @@ export default class AccountProfile extends React.Component {
 
             }.bind(this),
             error: function (res) {
-                TalentUtil.notification.show("Error while saving Employer details", "error", null, null);
+                TalentUtil.notification.show("Error while saving User details", "error", null, null);
             }
         })
     }
