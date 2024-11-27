@@ -142,9 +142,9 @@ export class ItemRow extends React.Component {
             <tr>
                 <td>{this.state.newData.name}</td>
                 <td>{this.state.newData.level}</td>
-                <td class="right aligned">
-                    <i class="pencil alternate icon" onClick={this.showEdit}></i>
-                    <i class="close icon" onClick={this.delete}></i>
+                <td className="right aligned">
+                    <i className="pencil alternate icon" onClick={this.showEdit}></i>
+                    <i className="close icon" onClick={this.delete}></i>
                 </td>
             </tr>
         )
@@ -336,7 +336,7 @@ export default class LevelItem extends React.Component {
                     levelOptions={this.props.levelOptions}
                     itemName={this.props.itemName}
                 />
-                <table class="ui table">
+                <table className="ui table">
                     <thead>
                         <tr>
                             <th>{this.itemNameFirstUpper}</th>
