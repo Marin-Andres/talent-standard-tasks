@@ -104,6 +104,7 @@ class ItemRow extends React.Component {
         this.closeEdit = this.closeEdit.bind(this);
         this.add = this.add.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.delete = this.delete.bind(this);
     };
 
     showEdit() {
@@ -138,6 +139,10 @@ class ItemRow extends React.Component {
         this.closeEdit();
     };
 
+    delete() {
+        this.props.deleteFunc(this.state.newData);
+    }
+
     renderView() {
         return (
             <tr key={this.state.newData.id}>
@@ -145,7 +150,7 @@ class ItemRow extends React.Component {
                 <td>{this.state.newData.level}</td>
                 <td class="right aligned">
                     <i class="pencil alternate icon" onClick={this.showEdit}></i>
-                    <i class="close icon"></i>
+                    <i class="close icon" onClick={this.delete}></i>
                 </td>
             </tr>
         )
@@ -201,6 +206,7 @@ export default class Skill extends React.Component {
         this.addSkill = this.addSkill.bind(this);
         this.updateWithoutSave = this.updateWithoutSave.bind(this);
         this.getSkills = this.getSkills.bind(this);
+        this.deleteSkill = this.deleteSkill.bind(this);
     };
 
     openAddNew() {
@@ -271,6 +277,32 @@ export default class Skill extends React.Component {
         })
     }
 
+    deleteSkill(data){
+        console.log("data", data);
+        var cookies = Cookies.get('talentAuthToken');
+        $.ajax({
+            url: 'http://localhost:60290/profile/profile/deleteSkill',
+            headers: {
+                'Authorization': 'Bearer ' + cookies,
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(data),
+            success: function (res) {
+                if (res.success == true) {
+                    TalentUtil.notification.show("Skills updated successfully", "success", null, null)
+                    this.getSkills();
+                } else {
+                    TalentUtil.notification.show("Skills did not update successfully", "error", null, null)
+                }
+
+            }.bind(this),
+            error: function (res) {
+                TalentUtil.notification.show("Error while updating skill details", "error", null, null);
+            }
+        })
+    }
+
     renderSkillTableItems(skillData){
         const skillArray = Array.isArray(skillData) ? skillData : Object.values(skillData);
 
@@ -283,6 +315,7 @@ export default class Skill extends React.Component {
                 <ItemRow 
                     skill={skill}
                     addFunc={this.addSkill}
+                    deleteFunc={this.deleteSkill}
                 />
             );
         });
