@@ -137,32 +137,55 @@ namespace Talent.Services.Profile.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<IActionResult> GetLanguages()
         {
-            //Your code here;
-            throw new NotImplementedException();
+            String talentId = _userAppContext.CurrentUserId;
+            var userProfile = await _profileService.GetTalentProfile(talentId);
+
+            return Json(new { Success = true, data = userProfile.Languages });
         }
 
         [HttpPost("addLanguage")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
-        public ActionResult AddLanguage([FromBody] AddLanguageViewModel language)
+        public async Task<IActionResult> AddLanguage([FromBody] AddLanguageViewModel language)
         {
-            //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                if (await _profileService.AddUpdateLanguage(language, talentId))
+                {
+                    return Json(new { Success = true });
+                }
+            }
+            return Json(new { Success = false });
         }
 
         [HttpPost("updateLanguage")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
-        public async Task<ActionResult> UpdateLanguage([FromBody] AddLanguageViewModel language)
+        public async Task<IActionResult> UpdateLanguage([FromBody] AddLanguageViewModel language)
         {
-            //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                if (await _profileService.AddUpdateLanguage(language, talentId))
+                {
+                    return Json(new { Success = true });
+                }
+            }
+            return Json(new { Success = false });
         }
 
         [HttpPost("deleteLanguage")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
-        public async Task<ActionResult> DeleteLanguage([FromBody] AddLanguageViewModel language)
+        public async Task<IActionResult> DeleteLanguage([FromBody] AddLanguageViewModel language)
         {
-            //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                if (await _profileService.DeleteLanguage(language, talentId))
+                {
+                    return Json(new { Success = true });
+                }
+            }
+            return Json(new { Success = false });
         }
 
         [HttpGet("getSkill")]
