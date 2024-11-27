@@ -147,8 +147,8 @@ namespace Talent.Services.Profile.Domain.Services
 
                 if (profile != null)
                 {
-                    var languages = profile.Languages.Select(x => ViewModelFromLanguage(x)).ToList();
-                    var skills = profile.Skills.Select(x => ViewModelFromSkill(x)).ToList();
+                    var languages = profile.Languages.FindAll(x => !x.IsDeleted).Select(x => ViewModelFromLanguage(x)).ToList();
+                    var skills = profile.Skills.FindAll(x => !x.IsDeleted).Select(x => ViewModelFromSkill(x)).ToList();
                     var experience = profile.Experience.Select(x => ViewModelFromExperience(x)).ToList();
 
                     var result = new TalentProfileViewModel
