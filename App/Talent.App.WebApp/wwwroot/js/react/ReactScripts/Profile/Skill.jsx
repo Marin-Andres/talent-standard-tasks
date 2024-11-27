@@ -2,9 +2,10 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 import { Select } from '../Form/Select.jsx'
+import { Icon } from 'semantic-ui-react';
 
 
-export class AddNewItem extends React.Component {
+class AddNewItem extends React.Component {
     constructor(props) {
         super(props);
 
@@ -15,7 +16,7 @@ export class AddNewItem extends React.Component {
         ];
 
         this.state = {
-            newData: {name: "", level: ""}
+            newData: {name: "", level: ""},
         };
 
         this.close = this.close.bind(this);
@@ -37,12 +38,12 @@ export class AddNewItem extends React.Component {
 
     add() {
         if (this.state.newData.name === "") {
-            TalentUtil.notification.show("Invalid skill name", "error", null, null);
-            return;
+            // TalentUtil.notification.show("Invalid skill name", "error", null, null);
+            // return;
         }
         if (this.state.newData.level === "") {
-            TalentUtil.notification.show("Invalid skill level", "error", null, null);
-            return;
+            // TalentUtil.notification.show("Invalid skill level", "error", null, null);
+            // return;
         }
         this.props.addFunc(this.state.newData);
         this.close();
@@ -86,14 +87,18 @@ export class AddNewItem extends React.Component {
 export default class Skill extends React.Component {
     constructor(props) {
         super(props);
+        const skillData = this.props.skillData ? this.props.skillData : [];
 
         this.state = {
-            showAddNew: false
+            showAddNew: false,
+            skillData: skillData
         }
 
         this.openAddNew = this.openAddNew.bind(this);
         this.closeAddNew = this.closeAddNew.bind(this);
         this.addSkill = this.addSkill.bind(this);
+        this.updateWithoutSave = this.updateWithoutSave.bind(this);
+        this.getSkills = this.getSkills.bind(this);
     };
 
     openAddNew() {
@@ -107,9 +112,39 @@ export default class Skill extends React.Component {
             showAddNew:false
         });
     }
+    
+    updateWithoutSave(newValues) {
+        let newData = Object.assign({}, this.state.skillData, newValues);
+        this.setState({
+            skillData: newData
+        });
+    }
+    
+    componentDidMount() {
+        this.getSkills();
+    }
+
+    getSkills(){
+        var cookies = Cookies.get('talentAuthToken');
+        $.ajax({
+            url: 'http://localhost:60290/profile/profile/getSkill',
+            headers: {
+                'Authorization': 'Bearer ' + cookies,
+                'Content-Type': 'application/json'
+            },
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (res) {
+                this.updateWithoutSave(res.data);
+            }.bind(this),
+            error: function (res) {
+                console.log(res.status);
+            }
+        })
+    }
 
     addSkill(data){
-        console.log("data",data);
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
             url: 'http://localhost:60290/profile/profile/addSkill',
@@ -133,6 +168,29 @@ export default class Skill extends React.Component {
         })
     }
 
+    renderSkillTableItems(skillData){
+        const skillArray = Array.isArray(skillData) ? skillData : Object.values(skillData);
+
+        if (!skillArray || skillArray.length === 0) {
+            return [];
+        }
+        const rows = [];
+        skillArray.forEach(skill => {
+            rows.push(
+                <tr key={skill.id}>
+                    <td>{skill.name}</td>
+                    <td>{skill.level}</td>
+                    <td class="right aligned">
+                        <i class="pencil alternate icon"></i>
+                        <i class="close icon"></i>
+                    </td>
+                </tr>
+            );
+        });
+
+        return rows;
+    }
+
     render() {
         return(
             <div className='ui sixteen wide column'>
@@ -151,6 +209,9 @@ export default class Skill extends React.Component {
                             </th>
                         </tr>
                     </thead>
+                    <tbody>
+                    {this.renderSkillTableItems(this.state.skillData)}
+                    </tbody>
                 </table>
             </div>                
         )
