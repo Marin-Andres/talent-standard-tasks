@@ -10,9 +10,10 @@ export default class Language extends React.Component {
 
     render() {
         const levelOptions = [
-            {value: "Beginner", title: "Beginner"}, 
-            {value: "Intermediate", title:"Intermediate"}, 
-            {value: "Expert", title:"Expert"}
+            {value: "Basic", title: "Basic"}, 
+            {value: "Conversational", title:"Conversational"}, 
+            {value: "Fluent", title:"Fluent"},
+            {value: "Native/Bilingual", title:"Native/Bilingual"}
         ];
         return(
             <LevelItem
