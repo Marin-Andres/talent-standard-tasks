@@ -259,6 +259,7 @@ export default class Skill extends React.Component {
             success: function (res) {
                 if (res.success == true) {
                     TalentUtil.notification.show("Skills updated successfully", "success", null, null)
+                    this.getSkills();
                 } else {
                     TalentUtil.notification.show("Skills did not update successfully", "error", null, null)
                 }
