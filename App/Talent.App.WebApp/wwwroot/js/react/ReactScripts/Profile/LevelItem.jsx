@@ -139,7 +139,7 @@ export class ItemRow extends React.Component {
 
     renderView() {
         return (
-            <tr key={this.state.newData.id}>
+            <tr>
                 <td>{this.state.newData.name}</td>
                 <td>{this.state.newData.level}</td>
                 <td class="right aligned">
@@ -152,7 +152,7 @@ export class ItemRow extends React.Component {
     
     renderEdit() {
         return (
-            <tr key={this.state.newData.id}>
+            <tr>
                 <td>
                     <input
                         type='text'
@@ -313,6 +313,7 @@ export default class LevelItem extends React.Component {
         itemArray.forEach(item => {
             rows.push(
                 <ItemRow 
+                    key={item.id}
                     item={item}
                     addFunc={this.addItem}
                     deleteFunc={this.deleteItem}
