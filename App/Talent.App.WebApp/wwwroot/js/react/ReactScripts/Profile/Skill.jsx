@@ -38,12 +38,12 @@ class AddNewItem extends React.Component {
 
     add() {
         if (this.state.newData.name === "") {
-            // TalentUtil.notification.show("Invalid skill name", "error", null, null);
-            // return;
+            TalentUtil.notification.show("Invalid skill name", "error", null, null);
+            return;
         }
         if (this.state.newData.level === "") {
-            // TalentUtil.notification.show("Invalid skill level", "error", null, null);
-            // return;
+            TalentUtil.notification.show("Invalid skill level", "error", null, null);
+            return;
         }
         this.props.addFunc(this.state.newData);
         this.close();
@@ -73,13 +73,115 @@ class AddNewItem extends React.Component {
                         />
                     </div>
                     <div className="ui six wide column">
-                    <button type="button" className="ui teal button" onClick={this.add}>Add</button>
-                    <button type="button" className="ui button" onClick={this.close}>Cancel</button>
-
+                        <button type="button" className="ui teal button" onClick={this.add}>Add</button>
+                        <button type="button" className="ui button" onClick={this.close}>Cancel</button>
                     </div>
                 </div>
             </div>
             : ""
+        )
+    }
+}
+
+class ItemRow extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.levelOptions = [
+            {value: "Beginner", title: "Beginner"}, 
+            {value: "Intermediate", title:"Intermediate"}, 
+            {value: "Expert", title:"Expert"}
+        ];
+
+        const skill = this.props.skill? this.props.skill : {id: null, name: "", level: ""};
+
+        this.state = {
+            newData: skill,
+            showEdit: false
+        };
+
+        this.showEdit = this.showEdit.bind(this);
+        this.closeEdit = this.closeEdit.bind(this);
+        this.add = this.add.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    };
+
+    showEdit() {
+        this.setState({
+            showEdit: true
+        });
+    };
+
+    closeEdit() {
+        this.setState({
+            showEdit: false
+        });
+    };
+    handleChange(event){
+        const data = Object.assign({}, this.state.newData);
+        data[event.target.name] = event.target.value;
+        this.setState({
+          newData: data
+        });
+    }
+
+    add() {
+        if (this.state.newData.name === "") {
+            TalentUtil.notification.show("Invalid skill name", "error", null, null);
+            return;
+        }
+        if (this.state.newData.level === "") {
+            TalentUtil.notification.show("Invalid skill level", "error", null, null);
+            return;
+        }
+        this.props.addFunc(this.state.newData);
+        this.closeEdit();
+    };
+
+    renderView() {
+        return (
+            <tr key={this.state.newData.id}>
+                <td>{this.state.newData.name}</td>
+                <td>{this.state.newData.level}</td>
+                <td class="right aligned">
+                    <i class="pencil alternate icon" onClick={this.showEdit}></i>
+                    <i class="close icon"></i>
+                </td>
+            </tr>
+        )
+    }
+    
+    renderEdit() {
+        return (
+            <tr key={this.state.newData.id}>
+                <td>
+                    <input
+                        type='text'
+                        name='name'
+                        value={this.state.newData.name}
+                        onChange={this.handleChange}
+                    />
+                </td>
+                <td>
+                    <Select
+                        type='text'
+                        name='level'
+                        selectedOption={this.state.newData.level}
+                        options={this.levelOptions}
+                        controlFunc={this.handleChange}
+                    />
+                </td>
+                <td>
+                    <button type="button" className="ui primary basic button" onClick={this.add}>Update</button>
+                    <button type="button" className="ui negative basic button" onClick={this.closeEdit}>Cancel</button>
+                </td>
+            </tr>
+        )
+    }
+
+    render() {
+        return (
+            this.state.showEdit ? this.renderEdit() : this.renderView()
         )
     }
 }
@@ -163,7 +265,7 @@ export default class Skill extends React.Component {
 
             }.bind(this),
             error: function (res) {
-                TalentUtil.notification.show("Error while saving Employer details", "error", null, null);
+                TalentUtil.notification.show("Error while updating skill details", "error", null, null);
             }
         })
     }
@@ -177,14 +279,10 @@ export default class Skill extends React.Component {
         const rows = [];
         skillArray.forEach(skill => {
             rows.push(
-                <tr key={skill.id}>
-                    <td>{skill.name}</td>
-                    <td>{skill.level}</td>
-                    <td class="right aligned">
-                        <i class="pencil alternate icon"></i>
-                        <i class="close icon"></i>
-                    </td>
-                </tr>
+                <ItemRow 
+                    skill={skill}
+                    addFunc={this.addSkill}
+                />
             );
         });
 
