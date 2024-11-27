@@ -28,7 +28,14 @@ export default class AccountProfile extends React.Component {
                 lastName: '',
                 email: '',
                 phone: '',
-                address: {},
+                address: {
+                    city: "",
+                    country: "",
+                    number: "",
+                    postCode: "",
+                    street: "",
+                    suburb: "",
+                },
                 nationality: '',
                 education: [],
                 languages: [],
@@ -45,7 +52,9 @@ export default class AccountProfile extends React.Component {
                 jobSeekingStatus: {
                     status: "",
                     availableDate: null
-                }
+                },
+                description: '',
+                summary: '',
             },
             loaderData: loaderData,
 
