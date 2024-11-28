@@ -243,6 +243,62 @@ namespace Talent.Services.Profile.Controllers
             return Json(new { Success = false });
         }
 
+
+        [HttpGet("getExperience")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
+        public async Task<IActionResult> GetExperience()
+        {
+            String talentId = _userAppContext.CurrentUserId;
+            var userProfile = await _profileService.GetTalentProfile(talentId);
+
+            return Json(new { Success = true, data = userProfile.Experience });
+        }
+
+        [HttpPost("addExperience")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
+        public async Task<IActionResult> AddExperience([FromBody] ExperienceViewModel experience)
+        {
+            if (ModelState.IsValid)
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                if (await _profileService.AddUpdateExperience(experience, talentId))
+                {
+                    return Json(new { Success = true });
+                }
+            }
+            return Json(new { Success = false });
+        }
+
+        [HttpPost("updateExperience")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
+        public async Task<IActionResult> UpdateExperience([FromBody] ExperienceViewModel experience)
+        {
+            if (ModelState.IsValid)
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                if (await _profileService.AddUpdateExperience(experience, talentId))
+                {
+                    return Json(new { Success = true });
+                }
+            }
+            return Json(new { Success = false });
+        }
+
+        [HttpPost("deleteExperience")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
+        public async Task<IActionResult> DeleteExperience([FromBody] ExperienceViewModel experience)
+        {
+            if (ModelState.IsValid)
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                if (await _profileService.DeleteExperience(experience, talentId))
+                {
+                    return Json(new { Success = true });
+                }
+            }
+            return Json(new { Success = false });
+        }
+
         [HttpGet("getCertification")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<IActionResult> getCertification()

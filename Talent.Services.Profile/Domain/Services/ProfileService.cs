@@ -43,6 +43,96 @@ namespace Talent.Services.Profile.Domain.Services
             _fileService = fileService;
         }
 
+        public async Task<bool> AddUpdateExperience(ExperienceViewModel newExperience, string userId)
+        {
+            try
+            {
+                if (userId != null)
+                {
+                    User existingTalent = (await _userRepository.GetByIdAsync(userId));
+
+                    existingTalent.UpdatedBy = userId;
+                    existingTalent.UpdatedOn = DateTime.Now;
+
+                    bool isNewExperience = true;
+                    var newExperiences = new List<UserExperience>();
+                    foreach (var item in existingTalent.Experience)
+                    {
+                        if (item.Id == newExperience.Id)
+                        {
+                            UpdateExperienceFromView(newExperience, item);
+                            isNewExperience = false;
+                        }
+                        newExperiences.Add(item);
+                    }
+
+                    if (isNewExperience)
+                    {
+                        var experience = new UserExperience
+                        {
+                            Id = ObjectId.GenerateNewId().ToString(),
+                        };
+                        UpdateExperienceFromView(newExperience, experience);
+                        newExperiences.Add(experience);
+                    }
+
+                    existingTalent.Experience = newExperiences;
+                    await _userRepository.Update(existingTalent);
+                    return true;
+                }
+                return false;
+            }
+            catch (MongoException e)
+            {
+                return false;
+            }
+
+        }
+
+        public async Task<bool> DeleteExperience(ExperienceViewModel experience, string userId)
+        {
+            try
+            {
+                if (userId != null)
+                {
+                    User existingTalent = (await _userRepository.GetByIdAsync(userId));
+
+                    existingTalent.UpdatedBy = userId;
+                    existingTalent.UpdatedOn = DateTime.Now;
+
+                    bool experienceFound = false;
+                    var newExperiences = new List<UserExperience>();
+                    foreach (var item in existingTalent.Experience)
+                    {
+                        if (item.Id == experience.Id)
+                        {
+                            experienceFound = true;
+                        }
+                        else
+                        {
+                            newExperiences.Add(item);
+                        }
+                        
+                    }
+                    if (experienceFound)
+                    {
+                        existingTalent.Experience = newExperiences;
+                        await _userRepository.Update(existingTalent);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                return false;
+            }
+            catch (MongoException e)
+            {
+                return false;
+            }
+        }
+
         public async Task<bool> AddUpdateLanguage(AddLanguageViewModel newLanguage, string userId)
         {
             try
@@ -577,6 +667,16 @@ namespace Talent.Services.Profile.Domain.Services
         {
             original.LanguageLevel = model.Level;
             original.Language = model.Name;
+        }
+
+        protected void UpdateExperienceFromView(ExperienceViewModel model, UserExperience original)
+        {
+            original.Id = model.Id;
+            original.Company = model.Company;
+            original.Position = model.Position;
+            original.Responsibilities = model.Responsibilities;
+            original.Start = model.Start;
+            original.End = model.End;
         }
 
         #endregion
