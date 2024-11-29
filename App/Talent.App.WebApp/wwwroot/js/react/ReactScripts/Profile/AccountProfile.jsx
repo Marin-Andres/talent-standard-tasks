@@ -241,30 +241,30 @@ export default class AccountProfile extends React.Component {
                                             title='Work experience'
                                             tooltip='Add your work experience'
                                         >
-                                            {/* <Experience
+                                            <Experience
                                                 experienceData={this.state.profileData.experience}
                                                 updateProfileData={this.updateAndSaveData}
-                                            /> */}
+                                            />
                                         </FormItemWrapper>
-                                        <FormItemWrapper
+                                        {/* <FormItemWrapper
                                             title='Education'
                                             tooltip='Add your educational background'
                                         >
-                                            {/* <Education
+                                            <Education
                                                 educationData={this.state.profileData.education}
                                                 updateProfileData={this.updateAndSaveData}
-                                            /> */}
+                                            />
                                         </FormItemWrapper>
                                         <FormItemWrapper
                                             title='Certification'
                                             tooltip='List your certificates, honors and awards'
                                         >
-                                            {/* <Certificate
+                                            <Certificate
                                                 certificateData={this.state.profileData.certifications}
                                                 updateProfileData={this.updateAndSaveData}
-                                            /> */}
+                                            />
                                         </FormItemWrapper>
-                                        {/* <FormItemWrapper
+                                        <FormItemWrapper
                                             title='Visa Status'
                                             tooltip='What is your current Visa/Citizenship status?'
                                         >
