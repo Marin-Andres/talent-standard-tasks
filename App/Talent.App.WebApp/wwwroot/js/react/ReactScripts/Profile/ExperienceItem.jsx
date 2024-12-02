@@ -228,70 +228,74 @@ export class ItemRow extends React.Component {
     
     renderEdit() {
         return (
-            <div className="ui grid">
-            <div className="row">
-                <div className="ui eight wide column">
-                    <div className="field">
-                        <label>Company:</label>
-                        <input
-                            type='text'
-                            name='company'
-                            value={this.state.newData.company}
-                            onChange={this.handleChange}
-                        />
+        <tr>
+            <td colSpan="6">
+                <div className="ui grid">
+                    <div className="row">
+                        <div className="ui eight wide column">
+                            <div className="field">
+                                <label>Company:</label>
+                                <input
+                                    type='text'
+                                    name='company'
+                                    value={this.state.newData.company}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                        </div>
+                        <div className="ui eight wide column">
+                            <div className="field">
+                                <label>Position:</label>
+                                <input
+                                    type='text'
+                                    name='position'
+                                    value={this.state.newData.position}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="ui eight wide column">
+                            <div className="field">
+                                <label>Start Date:</label>
+                                <UTCDatePicker
+                                    selected={this.state.newData.start}
+                                    onChange={(date) => this.handleDateChange("start", date)}
+                                />
+                            </div>
+                        </div>
+                        <div className="ui eight wide column">
+                            <div className="field">
+                                <label>End Date:</label>
+                                <UTCDatePicker
+                                    selected={this.state.newData.end}
+                                    onChange={(date) => this.handleDateChange("end", date)}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="ui sixteen wide column">
+                            <div className="field">
+                                <label>Responsibilities:</label>
+                                <input
+                                    type='text'
+                                    name='responsibilities'
+                                    value={this.state.newData.responsibilities}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="ui sixteen wide column">
+                        <button type="button" className="ui teal button" onClick={this.add}>Update</button>
+                        <button type="button" className="ui button" onClick={this.closeEdit}>Cancel</button>                </div>
                     </div>
                 </div>
-                <div className="ui eight wide column">
-                    <div className="field">
-                        <label>Position:</label>
-                        <input
-                            type='text'
-                            name='position'
-                            value={this.state.newData.position}
-                            onChange={this.handleChange}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="ui eight wide column">
-                    <div className="field">
-                        <label>Start Date:</label>
-                        <UTCDatePicker
-                            selected={this.state.newData.start}
-                            onChange={(date) => this.handleDateChange("start", date)}
-                        />
-                    </div>
-                </div>
-                <div className="ui eight wide column">
-                    <div className="field">
-                        <label>End Date:</label>
-                        <UTCDatePicker
-                            selected={this.state.newData.end}
-                            onChange={(date) => this.handleDateChange("end", date)}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="ui sixteen wide column">
-                    <div className="field">
-                        <label>Responsibilities:</label>
-                        <input
-                            type='text'
-                            name='responsibilities'
-                            value={this.state.newData.responsibilities}
-                            onChange={this.handleChange}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="ui sixteen wide column">
-                <button type="button" className="ui teal button" onClick={this.add}>Update</button>
-                <button type="button" className="ui button" onClick={this.closeEdit}>Cancel</button>                </div>
-            </div>
-        </div>
+            </td>
+        </tr>
         )
     }
 
