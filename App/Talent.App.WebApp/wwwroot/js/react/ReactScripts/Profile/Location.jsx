@@ -220,12 +220,12 @@ export class Nationality extends React.Component {
 
         return(
             <Select
-                            name="nationality"
-                            selectedOption={this.props.nationalityData}
-                            controlFunc={this.handleChange}
-                            options={countries}
-                            placeholder="Select your nationality"
-                        />
+                name="nationality"
+                selectedOption={this.props.nationalityData}
+                controlFunc={this.handleChange}
+                options={countries}
+                placeholder="Select your nationality"
+            />
         )
     }
 }
