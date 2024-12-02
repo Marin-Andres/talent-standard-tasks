@@ -671,7 +671,6 @@ namespace Talent.Services.Profile.Domain.Services
 
         protected void UpdateExperienceFromView(ExperienceViewModel model, UserExperience original)
         {
-            original.Id = model.Id;
             original.Company = model.Company;
             original.Position = model.Position;
             original.Responsibilities = model.Responsibilities;
