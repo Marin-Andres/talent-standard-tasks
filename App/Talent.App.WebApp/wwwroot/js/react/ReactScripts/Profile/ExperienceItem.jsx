@@ -357,6 +357,7 @@ export default class ExperienceItem extends React.Component {
             contentType: "application/json",
             dataType: "json",
             success: function (res) {
+                res.data.sort((a, b) => new Date(b.start) - new Date(a.start));
                 this.updateWithoutSave(res.data);
             }.bind(this),
             error: function (res) {

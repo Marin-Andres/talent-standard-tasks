@@ -11,9 +11,6 @@ export class UTCDatePicker extends React.Component {
     };
 
     convertUTCToLocalDate(date) {
-        if (!date) {
-          return date;
-        }
         const zuluOffset = new Date(date).getTimezoneOffset() * 60 * 1000;
         const localTimestamp = new Date(date).getTime() + zuluOffset;
         const adjustedDate = new Date(localTimestamp);
@@ -21,12 +18,9 @@ export class UTCDatePicker extends React.Component {
       }
       
       convertLocalToUTCDate(date) {
-        console.log("date", date);
-
         const zuluOffset = new Date(date).getTimezoneOffset() * 60 * 1000;
         const zuluTimestamp = new Date(date).getTime() - zuluOffset;
         const adjustedDate = new Date(zuluTimestamp);
-        console.log("adjustedDate",adjustedDate);
         return adjustedDate;
       }
 
