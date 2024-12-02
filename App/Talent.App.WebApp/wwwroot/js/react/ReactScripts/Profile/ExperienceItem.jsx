@@ -64,6 +64,7 @@ export class AddNewItem extends React.Component {
             const valid = schema.validateSync(this.state.newData);
 
             this.props.addFunc(this.state.newData);
+            this.setState({newData: {start: null, end: null}});
             this.close();
         } catch (error) {
             TalentUtil.notification.show(error, "error", null, null);
