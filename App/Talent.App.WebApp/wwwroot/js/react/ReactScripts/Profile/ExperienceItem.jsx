@@ -3,7 +3,8 @@ import React from 'react';
 import Cookies from 'js-cookie';
 import { Select } from '../Form/Select.jsx'
 import * as Yup from 'yup';
-import DatePicker from "react-datepicker";
+//import DatePicker from "react-datepicker";
+import { UTCDatePicker } from '../Form/UTCDatePicker.jsx'
 
 const schema = Yup.object().shape({
     end:
@@ -101,7 +102,7 @@ export class AddNewItem extends React.Component {
                     <div className="ui eight wide column">
                         <div className="field">
                             <label>Start Date:</label>
-                            <DatePicker
+                            <UTCDatePicker
                                 selected={this.state.newData.start}
                                 onChange={(date) => this.handleDateChange("start", date)}
                             />
@@ -110,7 +111,7 @@ export class AddNewItem extends React.Component {
                     <div className="ui eight wide column">
                         <div className="field">
                             <label>End Date:</label>
-                            <DatePicker
+                            <UTCDatePicker
                                 selected={this.state.newData.end}
                                 onChange={(date) => this.handleDateChange("end", date)}
                             />
@@ -255,7 +256,7 @@ export class ItemRow extends React.Component {
                 <div className="ui eight wide column">
                     <div className="field">
                         <label>Start Date:</label>
-                        <DatePicker
+                        <UTCDatePicker
                             selected={this.state.newData.start}
                             onChange={(date) => this.handleDateChange("start", date)}
                         />
@@ -264,7 +265,7 @@ export class ItemRow extends React.Component {
                 <div className="ui eight wide column">
                     <div className="field">
                         <label>End Date:</label>
-                        <DatePicker
+                        <UTCDatePicker
                             selected={this.state.newData.end}
                             onChange={(date) => this.handleDateChange("end", date)}
                         />
@@ -286,7 +287,7 @@ export class ItemRow extends React.Component {
             </div>
             <div className="row">
                 <div className="ui sixteen wide column">
-                <button type="button" className="ui teal button" onClick={this.add}>Add</button>
+                <button type="button" className="ui teal button" onClick={this.add}>Update</button>
                 <button type="button" className="ui button" onClick={this.closeEdit}>Cancel</button>                </div>
             </div>
         </div>
