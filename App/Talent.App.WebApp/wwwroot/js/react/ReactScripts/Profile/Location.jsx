@@ -216,13 +216,21 @@ export class Nationality extends React.Component {
         const countries = Object.keys(Countries).map(c => ({value: c, title: c}));
 
         return(
-            <Select
-                name="nationality"
-                selectedOption={this.props.nationalityData}
-                controlFunc={this.handleChange}
-                options={countries}
-                placeholder="Select your nationality"
-            />
+            <div className="ui grid">
+                <div className='row'>
+                    <div className='ui sixteen wide column'>
+                        <div className='field'>
+                            <Select
+                                name="nationality"
+                                selectedOption={this.props.nationalityData}
+                                controlFunc={this.handleChange}
+                                options={countries}
+                                placeholder="Select your nationality"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
