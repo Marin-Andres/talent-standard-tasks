@@ -157,8 +157,12 @@ export class Address extends React.Component {
                 </div>
             </div>
             <div className='row'>
-                <button type="button" className="ui teal button" onClick={this.saveData}>Save</button>
-                <button type="button" className="ui button" onClick={this.closeEdit}>Cancel</button>
+            <div className='ui six wide column'>
+                    <div className='field'>
+                        <button type="button" className="ui teal button" onClick={this.saveData}>Save</button>
+                        <button type="button" className="ui button" onClick={this.closeEdit}>Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
         )
@@ -217,12 +221,12 @@ export class Nationality extends React.Component {
 
         return(
             <Select
-                            name="nationality"
-                            selectedOption={this.props.nationalityData}
-                            controlFunc={this.handleChange}
-                            options={countries}
-                            placeholder="Select your nationality"
-                        />
+                name="nationality"
+                selectedOption={this.props.nationalityData}
+                controlFunc={this.handleChange}
+                options={countries}
+                placeholder="Select your nationality"
+            />
         )
     }
 }
