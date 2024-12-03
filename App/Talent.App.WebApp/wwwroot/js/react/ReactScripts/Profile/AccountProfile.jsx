@@ -133,7 +133,6 @@ export default class AccountProfile extends React.Component {
 
     saveProfile() {
         try {
-            console.log(this.state.profileData);
             var cookies = Cookies.get('talentAuthToken');
             $.ajax({
                 url: 'http://localhost:60290/profile/profile/updateTalentProfile',

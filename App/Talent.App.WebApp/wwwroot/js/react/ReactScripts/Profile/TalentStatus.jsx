@@ -17,7 +17,6 @@ export default class TalentStatus extends React.Component {
     }
 
     isChecked(statusValue) {
-        console.log("props",this.props);
         const jobSeekingStatus = this.props.status ? this.props.status.status : null;
         return (jobSeekingStatus === statusValue);
     }
@@ -25,7 +24,6 @@ export default class TalentStatus extends React.Component {
     handleChange(event, data) {
         const newData = {};
         newData[data.name] = data.value;
-        console.log(newData);
         this.props.updateProfileData(this.props.componentId, newData);
     }
     
