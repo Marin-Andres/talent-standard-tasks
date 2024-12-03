@@ -6,10 +6,10 @@ export default class TalentStatus extends React.Component {
         super(props);
 
         this.statusList = {
-            "active":     "Actively looking for a job",
-            "notLooking": "Not looking for a job at the moment",
-            "open":       "Currently employed but open to offers",
-            "later":      "Wil lbe available on later date",
+            "active":           "Actively looking for a job",
+            "notLooking":       "Not looking for a job at the moment",
+            "open":             "Currently employed but open to offers",
+            "later":            "Will be available on later date",
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -35,26 +35,18 @@ export default class TalentStatus extends React.Component {
                         <FormField>
                             <label>Current Status</label>
                         </FormField>
-                        <FormField>
-                            <Checkbox
-                                radio
-                                label={this.statusList["active"]}
-                                name='status'
-                                value={this.statusList["active"]}
-                                checked={this.isChecked(this.statusList["active"])}
-                                onChange={this.handleChange}
-                            />
-                        </FormField>
-                        <FormField>
-                            <Checkbox
-                                radio
-                                label={this.statusList["notLooking"]}
-                                name='status'
-                                value={this.statusList["notLooking"]}
-                                checked={this.isChecked(this.statusList["notLooking"])}
-                                onChange={this.handleChange}
-                            />
-                        </FormField>
+                        {Object.keys(this.statusList).map((s) =>
+                            <FormField key={s}>
+                                <Checkbox
+                                    radio
+                                    label={this.statusList[s]}
+                                    name='status'
+                                    value={this.statusList[s]}
+                                    checked={this.isChecked(this.statusList[s])}
+                                    onChange={this.handleChange}
+                                />
+                            </FormField>
+                        )}
                     </div>
                 </div>
             </div>
