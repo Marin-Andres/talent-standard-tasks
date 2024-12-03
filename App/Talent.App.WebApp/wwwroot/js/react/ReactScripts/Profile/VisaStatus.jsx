@@ -16,6 +16,14 @@ export default class VisaStatus extends React.Component {
         this.handleSave = this.handleSave.bind(this);
         this.isVisaTypeVisa = this.isVisaTypeVisa.bind(this);
     }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.visaExpiryDate !== this.props.visaExpiryDate) {
+            this.setState({
+                expiryDate: this.props.visaExpiryDate
+            });
+        }
+    }
     
     handleChange(event) {
         if (event.target.value) {
