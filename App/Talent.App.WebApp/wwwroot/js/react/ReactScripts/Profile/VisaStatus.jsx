@@ -9,12 +9,12 @@ export default class VisaStatus extends React.Component {
 
         this.state = {
             expiryDate: this.props.visaExpiryDate,
-            showDate: false
         };
         
         this.handleChange = this.handleChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        this.isVisaTypeVisa = this.isVisaTypeVisa.bind(this);
     }
     
     handleChange(event) {
@@ -22,17 +22,23 @@ export default class VisaStatus extends React.Component {
             const newData = {};
             newData[event.target.name] = event.target.value;
             this.props.saveProfileData(newData);
-            const visaTypeLowercase = (typeof event.target.value==="string")? event.target.value.toLowerCase() : "";
-            if (visaTypeLowercase.includes("visa")) {
-                this.setState({showDate: true});
-            }
-            else {
-                this.setState({showDate: false})
-            }
         }
         else {
             TalentUtil.notification.show("Invalid visa type", "error", null, null);
         }
+    }
+
+    isVisaTypeVisa() {
+        const visaTypeLowercase = 
+            (typeof this.props.visaStatus==="string") ? 
+                this.props.visaStatus.toLowerCase() 
+            : "";
+            if (visaTypeLowercase.includes("visa")) {
+                return true;
+            }
+            else {
+                return false;
+            }
     }
 
     handleDateChange(date) {
@@ -55,6 +61,7 @@ export default class VisaStatus extends React.Component {
             "Student Visa"]
         ;
         const visaOptions = visaTypeList.map(o => ({value: o, title: o}));
+        const showDate = this.isVisaTypeVisa();
         return (
                 <div className='row'>
                     <div className='ui four wide column'>
@@ -71,7 +78,7 @@ export default class VisaStatus extends React.Component {
                     </div>
                     
                         <div className='ui four wide column'>
-                                {this.state.showDate ? (
+                                {showDate ? (
                                     <div className="field">
                                         <label>Visa expiry date</label>
                                         <UTCDatePicker
@@ -83,7 +90,7 @@ export default class VisaStatus extends React.Component {
                         </div>
 
                         <div className='ui four wide column'>
-                            {this.state.showDate ? (
+                            {showDate ? (
                                 <div className="field" style={{ marginTop: '1.75em'}}>
                                     <button type="button" className="ui teal button" onClick={this.handleSave}>Save</button>
                                 </div>
