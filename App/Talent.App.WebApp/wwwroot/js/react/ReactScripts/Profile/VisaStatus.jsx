@@ -7,23 +7,28 @@ export default class VisaStatus extends React.Component {
     constructor(props) {
         super(props)
 
-        const inputDate  = this.props.visaExpiryDate ? this.props.visaExpiryDate : null;
-        console.log("inputDate", inputDate)
         this.state = {
             expiryDate: this.props.visaExpiryDate,
-            showDate: inputDate
+            showDate: false
         };
         
         this.handleChange = this.handleChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
     }
-
+    
     handleChange(event) {
         if (event.target.value) {
             const newData = {};
             newData[event.target.name] = event.target.value;
             this.props.saveProfileData(newData);
+            const visaTypeLowercase = (typeof event.target.value==="string")? event.target.value.toLowerCase() : "";
+            if (visaTypeLowercase.includes("visa")) {
+                this.setState({showDate: true});
+            }
+            else {
+                this.setState({showDate: false})
+            }
         }
         else {
             TalentUtil.notification.show("Invalid visa type", "error", null, null);
@@ -51,9 +56,8 @@ export default class VisaStatus extends React.Component {
         ;
         const visaOptions = visaTypeList.map(o => ({value: o, title: o}));
         return (
-            <div className='ui grid'>
                 <div className='row'>
-                    <div className='ui six wide column'>
+                    <div className='ui four wide column'>
                         <div className="field">
                             <label>Visa type</label>
                             <Select
@@ -65,22 +69,27 @@ export default class VisaStatus extends React.Component {
                             />
                         </div>
                     </div>
-                    <div className='ui six wide column'>
-                        <div className="field">
-                            <label>Visa expiry date</label>
-                            <UTCDatePicker
-                                selected={this.state.expiryDate}
-                                onChange={this.handleDateChange}
-                            />
+                    
+                        <div className='ui four wide column'>
+                                {this.state.showDate ? (
+                                    <div className="field">
+                                        <label>Visa expiry date</label>
+                                        <UTCDatePicker
+                                            selected={this.state.expiryDate}
+                                            onChange={this.handleDateChange}
+                                        />
+                                    </div>
+                                ) : null }
                         </div>
-                    </div>
-                    <div className='ui four wide column'>
-                        <div className="field" style={{ marginTop: '1.75em'}}>
-                            <button type="button" className="ui teal button" onClick={this.handleSave}>Save</button>
+
+                        <div className='ui four wide column'>
+                            {this.state.showDate ? (
+                                <div className="field" style={{ marginTop: '1.75em'}}>
+                                    <button type="button" className="ui teal button" onClick={this.handleSave}>Save</button>
+                                </div>
+                            ) : null }
                         </div>
-                    </div>
                 </div>
-            </div>
         )
     }
 }
