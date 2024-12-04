@@ -334,6 +334,7 @@ namespace Talent.Services.Profile.Domain.Services
                         VisaStatus = profile.VisaStatus,
                         VisaExpiryDate = profile.VisaExpiryDate,
                         ProfilePhoto = profile.ProfilePhoto,
+                        ProfilePhotoUrl = profile.ProfilePhotoUrl,
                         Summary = profile.Summary,
                         Description = profile.Description,
                         LinkedAccounts = profile.LinkedAccounts,
@@ -368,6 +369,7 @@ namespace Talent.Services.Profile.Domain.Services
                     existingTalent.VisaStatus = talentUser.VisaStatus;
                     existingTalent.VisaExpiryDate = talentUser.VisaExpiryDate;
                     existingTalent.ProfilePhoto = talentUser.ProfilePhoto;
+                    existingTalent.ProfilePhotoUrl = talentUser.ProfilePhotoUrl;
                     existingTalent.Summary = talentUser.Summary;
                     existingTalent.Description = talentUser.Description;
                     existingTalent.LinkedAccounts = talentUser.LinkedAccounts;
