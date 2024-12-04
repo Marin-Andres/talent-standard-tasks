@@ -137,10 +137,17 @@ namespace Talent.Services.Profile.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<IActionResult> GetLanguages()
         {
-            String talentId = _userAppContext.CurrentUserId;
-            var userProfile = await _profileService.GetTalentProfile(talentId);
+            try
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                var userProfile = await _profileService.GetTalentProfile(talentId);
 
-            return Json(new { Success = true, data = userProfile.Languages });
+                return Json(new { Success = true, data = userProfile.Languages });
+            }
+            catch (Exception e)
+            {
+                return Json(new { Success = false, e.Message });
+            }
         }
 
         [HttpPost("addLanguage")]
@@ -192,10 +199,17 @@ namespace Talent.Services.Profile.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<IActionResult> GetSkills()
         {
-            String talentId = _userAppContext.CurrentUserId;
-            var userProfile = await _profileService.GetTalentProfile(talentId);
+            try
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                var userProfile = await _profileService.GetTalentProfile(talentId);
 
-            return Json(new { Success = true, data = userProfile.Skills });
+                return Json(new { Success = true, data = userProfile.Skills });
+            }
+            catch (Exception e)
+            {
+                return Json(new { Success = false, e.Message });
+            }
         }
 
         [HttpPost("addSkill")]
@@ -248,10 +262,17 @@ namespace Talent.Services.Profile.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<IActionResult> GetExperience()
         {
-            String talentId = _userAppContext.CurrentUserId;
-            var userProfile = await _profileService.GetTalentProfile(talentId);
+            try
+            {
+                String talentId = _userAppContext.CurrentUserId;
+                var userProfile = await _profileService.GetTalentProfile(talentId);
 
-            return Json(new { Success = true, data = userProfile.Experience });
+                return Json(new { Success = true, data = userProfile.Experience });
+            }
+            catch (Exception e)
+            {
+                return Json(new { Success = false, e.Message });
+            }
         }
 
         [HttpPost("addExperience")]
@@ -514,10 +535,17 @@ namespace Talent.Services.Profile.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent, employer, recruiter")]
         public async Task<IActionResult> GetTalentProfile(String id = "")
         {
-            String talentId = String.IsNullOrWhiteSpace(id) ? _userAppContext.CurrentUserId : id;
-            var userProfile = await _profileService.GetTalentProfile(talentId);
-          
-            return Json(new { Success = true, data = userProfile });
+            try
+            {
+                String talentId = String.IsNullOrWhiteSpace(id) ? _userAppContext.CurrentUserId : id;
+                var userProfile = await _profileService.GetTalentProfile(talentId);
+
+                return Json(new { Success = true, data = userProfile });
+            }
+            catch (Exception e)
+            {
+                return Json(new { Success = false, e.Message });
+            }
         }
 
         [HttpPost("updateTalentProfile")]
