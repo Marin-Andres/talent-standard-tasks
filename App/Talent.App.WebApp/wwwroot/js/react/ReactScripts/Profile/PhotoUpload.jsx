@@ -1,6 +1,7 @@
 ﻿/* Photo upload section */
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
+import { Icon } from 'semantic-ui-react';
 export default class PhotoUpload extends Component {
 
     constructor(props) {
@@ -181,15 +182,28 @@ export default class PhotoUpload extends Component {
                     <h3>Profile Photo</h3>
                     <div className="tooltip">Upload image of your profile here</div>
                 </div>
-                <div className="ui six wide column">
-                    <section>
-                        <div>
+                <div className="ui six wide column center aligned">
+                        <div style={{marginBottom: '15px'}}>
                             <label htmlFor="work_sample_uploader" className="profile-photo">
                                 {showProfileImg}
                             </label>
                             <input id="selectFile" type="file" style={{ display: 'none' }} onChange={this.fileSelectedHandler} accept="image/*" multiple />
                         </div>
-                    </section>
+                        <div>
+                            <button 
+                                type="button" 
+                                className="ui center floated teal button" 
+                                onClick={this.upload}
+                            >
+                                <Icon name='upload'></Icon>Upload
+                            </button>
+                        </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="ui six wide column"></div>
+                <div className="ui five wide column">
+ 
                 </div>
             </div>
         </div>
