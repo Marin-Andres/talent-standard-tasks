@@ -13,7 +13,7 @@ export default class PhotoUpload extends Component {
         this.removeFile = this.removeFile.bind(this);
         this.fileUploadHandler = this.fileUploadHandler.bind(this);
         this.maxFileSize = 2097152;
-        this.maxNoOfFiles = 5;
+        this.maxNoOfFiles = 1;
         this.acceptedFileType = ["image/gif", "image/jpeg", "image/png", "image/jpg"];
 
         this.state = {
