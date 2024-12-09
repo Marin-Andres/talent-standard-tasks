@@ -26,12 +26,12 @@ export default class PhotoUpload extends Component {
         }
     };
 
-    loadImages(Id) {
+    loadImages() {
 
         var cookies = Cookies.get('talentAuthToken');
 
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/getEmployerProfileImage/?id=' + Id,
+            url: 'http://localhost:60290/profile/profile/getProfilePhoto',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -45,13 +45,16 @@ export default class PhotoUpload extends Component {
                 let imageIdArr = [];
                 let selectedFileArr = [];
 
-                if (res.employerProfile.length > 0) {
-                    for (var i = 0; i < res.employerProfile.length; i++) {
-                        imageSrcArr.push("http://localhost:60290/profile/profile/getEmployerProfileImages/?Id=" + res.employerProfile[i].fileName);
-                        imageIdArr.push(res.employerProfile[i].id);
-                        selectedFileArr.push("");
-                    }
-                }
+                imageSrcArr.push("http://localhost:60290/profile/profile/getProfileImage/?Id=" + res.profilePath);
+                imageIdArr.push(res.profilePath);
+                selectedFileArr.push("");                
+                // if (res.employerProfile.length > 0) {
+                //     for (var i = 0; i < res.employerProfile.length; i++) {
+                //         imageSrcArr.push("http://localhost:60290/profile/profile/getProfileImage/?Id=" + res.employerProfile[i].fileName);
+                //         imageIdArr.push(res.employerProfile[i].id);
+                //         selectedFileArr.push("");
+                //     }
+                // }
 
                 this.setState({
                     imageSrc: imageSrcArr,
@@ -91,7 +94,6 @@ export default class PhotoUpload extends Component {
                 localCurrentNoOfFiles = localCurrentNoOfFiles + 1
             }
         }
-
         this.setState({
             selectedFile: localSelectedFile,
             selectedFileName: localSelectedFileName,
@@ -125,41 +127,40 @@ export default class PhotoUpload extends Component {
         })
     }
 
-    fileUploadHandler(Id) {
-        let data = new FormData();
-        for (var i = 0; i < this.state.selectedFile.length; i++) {
-            if (this.state.selectedFile[i] != "") {
-                data.append('file' + i, this.state.selectedFile[i]);
-            }
-        }
-
-        data.append('Id', Id);
-        data.append('FileRemoveId', this.state.selectedRemoveFileId);
-
-        var cookies = Cookies.get('talentAuthToken');
-
-        $.ajax({
-            url: 'http://localhost:60290/profile/profile/addEmployerProfileImages',
-            headers: {
-                'Authorization': 'Bearer ' + cookies
-            },
-            type: "POST",
-            data: data,
-            cache: false,
-            processData: false,
-            contentType: false,
-            success: function (res) {
-                if (res.success) {
-                    this.loadImages(Id);
-                } else {
-                    TalentUtil.notification.show(res.message, "error", null, null);
+    fileUploadHandler() {
+        if (this.state.selectedFile.length > 0) {
+            let data = new FormData();
+            for (var i = 0; i < this.state.selectedFile.length; i++) {
+                if (this.state.selectedFile[i] != "") {
+                    data.append('file' + i, this.state.selectedFile[i]);
                 }
-            }.bind(this),
-            error: function (res, status, error) {
-                //Display error
-                TalentUtil.notification.show("There is an error when updating Images - " + error, "error", null, null);
             }
-        });
+
+            var cookies = Cookies.get('talentAuthToken');
+
+            $.ajax({
+                url: 'http://localhost:60290/profile/profile/UpdateProfilePhoto',
+                headers: {
+                    'Authorization': 'Bearer ' + cookies
+                },
+                type: "POST",
+                data: data,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    if (res.success) {
+                        this.loadImages(Id);
+                    } else {
+                        TalentUtil.notification.show(res.message, "error", null, null);
+                    }
+                }.bind(this),
+                error: function (res, status, error) {
+                    //Display error
+                    TalentUtil.notification.show("There is an error when updating Images - " + error, "error", null, null);
+                }
+            });
+        }
     }
 
     render() {
@@ -167,12 +168,12 @@ export default class PhotoUpload extends Component {
 
         for (let i = 0; i < this.state.currentNoOfFiles; i++) {
             if (this.state.imageSrc[i] != null) {
-                showProfileImg.push(<span><img style={{ height: 112, width: 112, borderRadius: 55 }} className="ui small" src={this.state.imageSrc[i]} alt="Image Not Found" /><i className="remove sign icon" onClick={this.removeFile} value={i} imageid={this.state.imageId[i]}></i></span>);
+                showProfileImg.push(<span key={i}><img style={{ height: 112, width: 112, borderRadius: 55 }} className="ui small" src={this.state.imageSrc[i]} alt="Image Not Found" /><i className="remove sign icon" onClick={this.removeFile} value={i} imageid={this.state.imageId[i]}></i></span>);
             }
         }
 
         if (this.state.currentNoOfFiles < this.maxNoOfFiles) {
-            showProfileImg.push(<span><i className="huge circular camera retro icon" style={{ alignContent: 'right', verticalAlign: 'top' }} onClick={this.selectFileToUpload}></i></span>);
+            showProfileImg.push(<span key="new"><i className="huge circular camera retro icon" style={{ alignContent: 'right', verticalAlign: 'top' }} onClick={this.selectFileToUpload}></i></span>);
         }
 
         return (
@@ -189,13 +190,13 @@ export default class PhotoUpload extends Component {
                             <label htmlFor="work_sample_uploader" className="profile-photo">
                                 {showProfileImg}
                             </label>
-                            <input id="selectFile" type="file" style={{ display: 'none' }} onChange={this.fileSelectedHandler} accept="image/*" multiple />
+                            <input id="selectFile" type="file" style={{ display: 'none' }} onChange={this.fileSelectedHandler} accept="image/*" />
                         </div>
                         <div>
                             <button 
                                 type="button" 
                                 className="ui teal button" 
-                                onClick={this.upload}
+                                onClick={this.fileUploadHandler}
                             >
                                 <Icon name='upload'></Icon>Upload
                             </button>

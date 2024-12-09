@@ -20,6 +20,7 @@ using MongoDB.Driver;
 using Talent.Services.Profile.Domain.Contracts;
 using Talent.Common.Aws;
 using Talent.Services.Profile.Models;
+using StackExchange.Redis;
 
 namespace Talent.Services.Profile.Controllers
 {
@@ -354,19 +355,47 @@ namespace Talent.Services.Profile.Controllers
 
         [HttpGet("getProfileImage")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public ActionResult getProfileImage(string Id)
+        public async Task<IActionResult> getProfileImage(string Id)
         {
-            var profileUrl = _documentService.GetFileURL(Id, FileType.ProfilePhoto);
-            //Please do logic for no image available - maybe placeholder would be fine
+            var profileUrl = await _documentService.GetFileURL(Id, FileType.ProfilePhoto);
             return Json(new { profilePath = profileUrl });
+        }
+
+        [HttpGet("getProfilePhoto")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> getProfilePhoto(string Id = "")
+        {            
+            try
+            {
+                String talentId = String.IsNullOrWhiteSpace(Id) ? _userAppContext.CurrentUserId : Id;
+                var userProfile = await _profileService.GetTalentProfile(talentId);
+
+                return Json(new { Success = true, data = userProfile.ProfilePhoto });
+            }
+            catch (Exception e)
+            {
+                return Json(new { Success = false, e.Message });
+            }
         }
 
         [HttpPost("updateProfilePhoto")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<ActionResult> UpdateProfilePhoto()
         {
-            //Your code here;
-            throw new NotImplementedException();
+            try
+            {
+                IFormFile file = Request.Form.Files[0];
+                String talentId = _userAppContext.CurrentUserId;
+                if (await _profileService.UpdateTalentPhoto(talentId, file))
+                {
+                    return Json(new { Success = true });
+                }
+                return Json(new { Success = false });
+            }
+            catch (Exception e)
+            {
+                return Json(new { Success = false, e.Message });
+            }
         }
 
         [HttpPost("updateTalentCV")]
