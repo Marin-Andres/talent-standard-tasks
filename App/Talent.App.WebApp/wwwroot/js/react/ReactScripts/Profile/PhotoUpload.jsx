@@ -150,7 +150,8 @@ export default class PhotoUpload extends Component {
                 contentType: false,
                 success: function (res) {
                     if (res.success) {
-                        this.loadImages(Id);
+                        TalentUtil.notification.show("Profile photo updated successfully", "success", null, null)
+                        this.loadImages();
                     } else {
                         TalentUtil.notification.show(res.message, "error", null, null);
                     }
