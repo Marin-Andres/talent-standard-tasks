@@ -22,7 +22,8 @@ export default class PhotoUpload extends Component {
             imageSrc: [],
             imageId: [],
             selectedRemoveFileId: [],
-            currentNoOfFiles: 0
+            currentNoOfFiles: 0,
+            showUpload: false,
         }
     };
 
@@ -99,7 +100,8 @@ export default class PhotoUpload extends Component {
             selectedFileName: localSelectedFileName,
             imageSrc: localImageSrc,
             imageId: localImageId,
-            currentNoOfFiles: localCurrentNoOfFiles
+            currentNoOfFiles: localCurrentNoOfFiles,
+            showUpload: true,
         })
     }
 
@@ -151,6 +153,7 @@ export default class PhotoUpload extends Component {
                 success: function (res) {
                     if (res.success) {
                         TalentUtil.notification.show("Profile photo updated successfully", "success", null, null)
+                        this.setState({showUpload: false});
                         this.loadImages();
                     } else {
                         TalentUtil.notification.show(res.message, "error", null, null);
@@ -161,6 +164,7 @@ export default class PhotoUpload extends Component {
                     TalentUtil.notification.show("There is an error when updating Images - " + error, "error", null, null);
                 }
             });
+            
         }
     }
 
@@ -194,13 +198,15 @@ export default class PhotoUpload extends Component {
                             <input id="selectFile" type="file" style={{ display: 'none' }} onChange={this.fileSelectedHandler} accept="image/*" />
                         </div>
                         <div>
-                            <button 
-                                type="button" 
-                                className="ui teal button" 
-                                onClick={this.fileUploadHandler}
-                            >
-                                <Icon name='upload'></Icon>Upload
-                            </button>
+                            {this.state.showUpload ? (
+                                <button 
+                                    type="button" 
+                                    className="ui teal button" 
+                                    onClick={this.fileUploadHandler}
+                                >
+                                    <Icon name='upload'></Icon>Upload
+                                </button>
+                            ) : null }
                         </div>
                     </div>
                 </div>
