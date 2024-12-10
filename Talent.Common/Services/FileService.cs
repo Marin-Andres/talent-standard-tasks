@@ -59,8 +59,17 @@ namespace Talent.Common.Services
 
         public async Task<bool> DeleteFile(string id, FileType type)
         {
-            //Your code here;
-            throw new NotImplementedException();
+            try
+            {
+                var removeSuccess = await _awsService.RemoveFileFromS3(id, _bucketName);
+                if (!removeSuccess)
+                    return false;
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
 
 
