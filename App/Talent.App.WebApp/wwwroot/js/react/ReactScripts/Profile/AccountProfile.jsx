@@ -127,7 +127,7 @@ export default class AccountProfile extends React.Component {
         }
         else {
             data[componentId] = newValues;
-            this.updateAndSaveData(newValues)
+            this.updateAndSaveData(data);
         }
     }
 
@@ -174,11 +174,11 @@ export default class AccountProfile extends React.Component {
                                             title='Linked Accounts'
                                             tooltip='Linking to online social networks adds credibility to your profile'
                                         >
-                                            {/* <SocialMediaLinkedAccount
+                                            <SocialMediaLinkedAccount
                                                 linkedAccounts={this.state.profileData.linkedAccounts}
-                                                updateProfileData={this.updateWithoutSave}
-                                                saveProfileData={this.updateAndSaveData}
-                                            /> */}
+                                                updateProfileData={this.updateForComponentId}
+                                                componentId='linkedAccounts'
+                                            /> 
                                         </FormItemWrapper>
                                         <FormItemWrapper
                                             title='Description'
