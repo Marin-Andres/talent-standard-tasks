@@ -114,7 +114,7 @@ export default class AccountProfile extends React.Component {
 
     //updates component's state and saves data
     updateAndSaveData(newValues) {
-        let newProfile = Object.assign({}, this.state.profileData, newValues)
+        let newProfile = Object.assign({}, this.state.profileData, newValues);
         this.setState({
             profileData: newProfile
         }, this.saveProfile)
@@ -132,27 +132,32 @@ export default class AccountProfile extends React.Component {
     }
 
     saveProfile() {
-        var cookies = Cookies.get('talentAuthToken');
-        $.ajax({
-            url: 'http://localhost:60290/profile/profile/updateTalentProfile',
-            headers: {
-                'Authorization': 'Bearer ' + cookies,
-                'Content-Type': 'application/json'
-            },
-            type: "POST",
-            data: JSON.stringify(this.state.profileData),
-            success: function (res) {
-                if (res.success == true) {
-                    TalentUtil.notification.show("Profile updated successfully", "success", null, null)
-                } else {
-                    TalentUtil.notification.show("Profile did not update successfully", "error", null, null)
-                }
+        try {
+            var cookies = Cookies.get('talentAuthToken');
+            $.ajax({
+                url: 'http://localhost:60290/profile/profile/updateTalentProfile',
+                headers: {
+                    'Authorization': 'Bearer ' + cookies,
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                data: JSON.stringify(this.state.profileData),
+                success: function (res) {
+                    if (res.success == true) {
+                        TalentUtil.notification.show("Profile updated successfully", "success", null, null)
+                    } else {
+                        TalentUtil.notification.show("Profile did not update successfully", "error", null, null)
+                    }
 
-            }.bind(this),
-            error: function (res) {
-                TalentUtil.notification.show("Error while saving User details", "error", null, null);
-            }
-        })
+                }.bind(this),
+                error: function (res) {
+                    TalentUtil.notification.show("Error while saving User details", "error", null, null);
+                }
+            })
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     render() {
@@ -275,17 +280,17 @@ export default class AccountProfile extends React.Component {
                                                 saveProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
-                                        {/* <FormItemWrapper
+                                        <FormItemWrapper
                                             title='Status'
                                             tooltip='What is your current status in jobseeking?'
                                         >
                                             <TalentStatus
                                                 status={this.state.profileData.jobSeekingStatus}
-                                                updateProfileData={this.updateWithoutSave}
-                                                saveProfileData={this.updateAndSaveData}
+                                                updateProfileData={this.updateForComponentId}
+                                                componentId="jobSeekingStatus"
                                             />
                                         </FormItemWrapper>
-                                        <FormItemWrapper
+                                        {/* <FormItemWrapper
                                             title='Profile Photo'
                                             tooltip='Please upload your profile photo'
                                             hideSegment={true}
