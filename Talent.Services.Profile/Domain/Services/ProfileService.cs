@@ -427,7 +427,7 @@ namespace Talent.Services.Profile.Domain.Services
             {
                 videoUrl = string.IsNullOrWhiteSpace(profile.VideoName)
                           ? ""
-                          : await _fileService.GetFileURL(profile.VideoName, FileType.UserVideo);
+                          : await _fileService.GetPresignedFileURL(profile.VideoName, FileType.UserVideo);
 
                 var skills = profile.Skills.Select(x => ViewModelFromSkill(x)).ToList();
 

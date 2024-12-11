@@ -33,6 +33,13 @@ namespace Talent.Common.Services
             return fileUrl;
         }
 
+        public async Task<string> GetPresignedFileURL(string id, FileType type)
+        {
+            string fileUrl = await _awsService.GetPresignedUrlObject(id, _bucketName);
+            return fileUrl;
+        }
+
+
         public async Task<string> SaveFile(IFormFile file, FileType type)
         {
             try
