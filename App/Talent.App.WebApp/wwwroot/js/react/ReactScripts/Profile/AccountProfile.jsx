@@ -223,10 +223,10 @@ export default class AccountProfile extends React.Component {
                                             title='Languages'
                                             tooltip='Select languages that you speak'
                                         >
-                                            {/* <Language
+                                            <Language
                                                 languageData={this.state.profileData.languages}
                                                 updateProfileData={this.updateAndSaveData}
-                                            /> */}
+                                            />
                                         </FormItemWrapper>
                                         <FormItemWrapper
                                             title='Skills'
