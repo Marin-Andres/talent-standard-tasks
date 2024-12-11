@@ -17,10 +17,7 @@ export default class PhotoUpload extends Component {
 
         this.state = {
             selectedFile: null,
-            selectedFileName: null,
             imageSrc: null,
-            imageId: null,
-            selectedRemoveFileId: null,
             showUpload: false,
         }
     };
@@ -57,9 +54,7 @@ export default class PhotoUpload extends Component {
     fileSelectedHandler(event) {
 
         let localSelectedFile = this.state.selectedFile;
-        let localSelectedFileName = this.state.selectedFileName;
         let localImageSrc = this.state.imageSrc;
-        let localImageId = this.state.imageId;
         let localCurrentNoOfFiles = this.state.currentNoOfFiles;
 
         if (localCurrentNoOfFiles >= this.maxNoOfFiles) {
@@ -70,15 +65,11 @@ export default class PhotoUpload extends Component {
         } 
         else {
             localSelectedFile = event.target.files[0];
-            localSelectedFileName = event.target.files[0].name;
             localImageSrc = window.URL.createObjectURL(event.target.files[0]);
-            localImageId = '0';
         }
         this.setState({
             selectedFile: localSelectedFile,
-            selectedFileName: localSelectedFileName,
             imageSrc: localImageSrc,
-            imageId: localImageId,
             showUpload: true,
         })
     }
