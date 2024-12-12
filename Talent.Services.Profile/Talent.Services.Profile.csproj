@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
+	<PropertyGroup>
+		<OutputPath>$(SolutionDir)\bin\Profile</OutputPath>
+	</PropertyGroup>  
   <PropertyGroup Label="Globals">
     <SccProjectName>SAK</SccProjectName>
     <SccProvider>SAK</SccProvider>
