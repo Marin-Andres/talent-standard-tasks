@@ -232,7 +232,7 @@ export default class LevelItem extends React.Component {
 
     getItems(){
         var cookies = Cookies.get('talentAuthToken');
-        const getUrl = 'http://localhost:60290/profile/profile/get' + this.itemNameFirstUpper;
+        const getUrl = 'https://standardprofile-gugya2axa7bsdtg4.australiasoutheast-01.azurewebsites.net/profile/profile/get' + this.itemNameFirstUpper;
         $.ajax({
             url: getUrl,
             headers: {
@@ -253,7 +253,7 @@ export default class LevelItem extends React.Component {
 
     addItem(data){
         var cookies = Cookies.get('talentAuthToken');
-        const addUrl = 'http://localhost:60290/profile/profile/add' + this.itemNameFirstUpper;
+        const addUrl = 'https://standardprofile-gugya2axa7bsdtg4.australiasoutheast-01.azurewebsites.net/profile/profile/add' + this.itemNameFirstUpper;
         $.ajax({
             url: addUrl,
             headers: {
@@ -279,7 +279,7 @@ export default class LevelItem extends React.Component {
 
     deleteItem(data){
         var cookies = Cookies.get('talentAuthToken');
-        const deleteUrl = 'http://localhost:60290/profile/profile/delete' + this.itemNameFirstUpper;
+        const deleteUrl = 'https://standardprofile-gugya2axa7bsdtg4.australiasoutheast-01.azurewebsites.net/profile/profile/delete' + this.itemNameFirstUpper;
         $.ajax({
             url: deleteUrl,
             headers: {

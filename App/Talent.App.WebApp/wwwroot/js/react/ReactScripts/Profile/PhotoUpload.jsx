@@ -27,7 +27,7 @@ export default class PhotoUpload extends Component {
         var cookies = Cookies.get('talentAuthToken');
 
         $.ajax({
-            url: 'http://localhost:60290/profile/profile/getProfilePhoto',
+            url: 'https://standardprofile-gugya2axa7bsdtg4.australiasoutheast-01.azurewebsites.net/profile/profile/getProfilePhoto',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
@@ -85,7 +85,7 @@ export default class PhotoUpload extends Component {
             var cookies = Cookies.get('talentAuthToken');
 
             $.ajax({
-                url: 'http://localhost:60290/profile/profile/UpdateProfilePhoto',
+                url: 'https://standardprofile-gugya2axa7bsdtg4.australiasoutheast-01.azurewebsites.net/profile/profile/UpdateProfilePhoto',
                 headers: {
                     'Authorization': 'Bearer ' + cookies
                 },
