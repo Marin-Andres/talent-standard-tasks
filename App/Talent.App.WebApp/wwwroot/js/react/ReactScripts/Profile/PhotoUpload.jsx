@@ -141,12 +141,6 @@ export default class PhotoUpload extends Component {
 
         return (
             <div className="ui grid container">
-                <div className="ui four wide column">
-                    <div className="field">
-                        <h3>Profile Photo</h3>
-                        <div className="tooltip">Upload image of your profile here</div>
-                    </div>
-                </div>
                 <div className="ui twelve wide column">
                     <div className="field">
                         <div style={{marginBottom: '15px'}}>
