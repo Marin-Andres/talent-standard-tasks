@@ -151,13 +151,12 @@ export default class AccountProfile extends React.Component {
 
                 }.bind(this),
                 error: function (res) {
-                    TalentUtil.notification.show("Error while saving User details", "error", null, null);
+                    TalentUtil.notification.show("Profile did not update successfully", "error", null, null)
                 }
             })
         }
         catch (error) {
-            console.log(error);
-        }
+            TalentUtil.notification.show("Profile did not update successfully", "error", null, null)        }
     }
 
     render() {
@@ -290,7 +289,7 @@ export default class AccountProfile extends React.Component {
                                                 componentId="jobSeekingStatus"
                                             />
                                         </FormItemWrapper>
-                                        {/* <FormItemWrapper
+                                        <FormItemWrapper
                                             title='Profile Photo'
                                             tooltip='Please upload your profile photo'
                                             hideSegment={true}
@@ -301,7 +300,7 @@ export default class AccountProfile extends React.Component {
                                                 savePhotoUrl='http://localhost:60290/profile/profile/updateProfilePhoto'
                                             />
                                         </FormItemWrapper>
-                                        <FormItemWrapper
+                                        {/*<FormItemWrapper
                                             title='Profile Video'
                                             tooltip='Upload a brief self-introduction video'
                                             hideSegment={true}
