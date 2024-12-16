@@ -151,13 +151,12 @@ export default class AccountProfile extends React.Component {
 
                 }.bind(this),
                 error: function (res) {
-                    TalentUtil.notification.show("Error while saving User details", "error", null, null);
+                    TalentUtil.notification.show("Profile did not update successfully", "error", null, null)
                 }
             })
         }
         catch (error) {
-            console.log(error);
-        }
+            TalentUtil.notification.show("Profile did not update successfully", "error", null, null)        }
     }
 
     render() {
