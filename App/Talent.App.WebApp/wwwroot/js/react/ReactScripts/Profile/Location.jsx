@@ -69,7 +69,6 @@ export class Address extends React.Component {
             this.props.updateProfileData(this.props.componentId, this.state.newData);
             this.closeEdit();
           } catch (error) {
-            console.log("error",error);
             TalentUtil.notification.show(error, "error", null, null);
           }
     }
