@@ -123,6 +123,8 @@ namespace Talent.Services.Identity.Domain.Services
                         Login = login,
                     };
 
+                    newTalent.Email = user.Email;
+
                     await _userRepository.Add(newTalent);
                     return _jwtHandler.Create(newTalent.Id, user.UserRole, true);
                 }
