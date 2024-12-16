@@ -2,7 +2,7 @@
 import Cookies from 'js-cookie';
 import { ChildSingleInput } from '../Form/SingleInput.jsx';
 import { Location } from '../Employer/CreateJob/Location.jsx';
-import * as Yup from 'yup';
+import { individualDetailsSchema } from "./ValidationSchemas.js";
 export class IndividualDetailSection extends Component {
   constructor(props) {
     super(props)
@@ -20,12 +20,7 @@ export class IndividualDetailSection extends Component {
       showEditSection: false,
       newContact: details
     }
-    this.schema = Yup.object().shape({
-      firstName: Yup.string().required('First name required'),
-      lastName: Yup.string().required('Last name required'),
-      email: Yup.string().email('Email is not valid').required('Email required'),
-      phone: Yup.string().matches(TalentUtil.phoneRegExp(), 'Phone number is not valid'),
-    });
+    this.schema = individualDetailsSchema;
 
     this.openEdit = this.openEdit.bind(this)
     this.closeEdit = this.closeEdit.bind(this)
@@ -149,7 +144,7 @@ export class IndividualDetailSection extends Component {
   }
 }
 
-
+import { companyDetailsSchema } from "./ValidationSchemas.js";
 export class CompanyDetailSection extends Component {
   constructor(props) {
     super(props)
@@ -166,11 +161,7 @@ export class CompanyDetailSection extends Component {
       showEditSection: false,
       newContact: details
     }
-    this.schema = Yup.object().shape({
-      name: Yup.string().required('Name required'),
-      email: Yup.string().email('Email is not valid').required('Email required'),
-      phone: Yup.string().matches(TalentUtil.phoneRegExp(), 'Phone number is not valid'),
-    });
+    this.schema = companyDetailsSchema;
 
 
     this.openEdit = this.openEdit.bind(this)
