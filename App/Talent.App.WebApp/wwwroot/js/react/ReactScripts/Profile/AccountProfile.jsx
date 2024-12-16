@@ -95,13 +95,13 @@ export default class AccountProfile extends React.Component {
                     this.updateWithoutSave(res.data)
                 }.bind(this),
                 error: function (res) {
-                    console.log(res.status)
+                    TalentUtil.notification.show("Unable to read profile data", "error", null, null)
                 }
             })
             this.init()
         }
         catch (error) {
-            console.log(error);
+            TalentUtil.notification.show("Unable to read profile data", "error", null, null);
         }
     }
     //updates component's state without saving data
