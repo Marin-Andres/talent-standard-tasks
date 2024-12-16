@@ -216,8 +216,16 @@ export class Nationality extends React.Component {
 
     
     render() {
-        const countries = Object.keys(Countries).map(c => ({value: c, title: c}));
-
+        let countries = [];
+        try {
+            if (Countries && typeof Countries === 'object' && !Array.isArray(Countries) && Object.keys(Countries).length > 0) {
+                countries = Object.keys(Countries).map(c => ({ value: c, title: c }));
+            }
+        }
+        catch (error) {
+            console.error('Error processing Countries:', error);
+        }
+        
         return(
             <div className="ui grid">
                 <div className='row'>
