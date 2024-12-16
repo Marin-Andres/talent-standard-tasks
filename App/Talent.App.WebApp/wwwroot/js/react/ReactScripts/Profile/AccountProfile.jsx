@@ -144,6 +144,7 @@ export default class AccountProfile extends React.Component {
             success: function (res) {
                 if (res.success == true) {
                     TalentUtil.notification.show("Profile updated successfully", "success", null, null)
+                    this.loadData();                    
                 } else {
                     TalentUtil.notification.show("Profile did not update successfully", "error", null, null)
                 }
@@ -204,11 +205,11 @@ export default class AccountProfile extends React.Component {
                                         <FormItemWrapper
                                             title='Address'
                                             tooltip='Enter your current address'>
-                                            {/* <Address
+                                             <Address
                                                 addressData={this.state.profileData.address}
-                                                updateProfileData={this.updateWithoutSave}
-                                                saveProfileData={this.updateAndSaveData}
-                                            /> */}
+                                                updateProfileData={this.updateForComponentId}
+                                                componentId='address'
+                                            />
                                         </FormItemWrapper>
                                         <FormItemWrapper
                                             title='Nationality'
