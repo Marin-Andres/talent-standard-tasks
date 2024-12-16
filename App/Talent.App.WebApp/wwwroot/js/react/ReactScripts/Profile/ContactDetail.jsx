@@ -71,12 +71,6 @@ export class IndividualDetailSection extends Component {
     }
   }
 
-  render() {
-    return (
-      this.state.showEditSection ? this.renderEdit() : this.renderDisplay()
-    )
-  }
-
   renderEdit() {
     return (
       <div className='ui sixteen wide column'>
@@ -147,6 +141,12 @@ export class IndividualDetailSection extends Component {
       </div>
     )
   }
+
+  render() {
+    return (
+      this.state.showEditSection ? this.renderEdit() : this.renderDisplay()
+    )
+  }
 }
 
 
@@ -215,12 +215,6 @@ export class CompanyDetailSection extends Component {
     } catch (error) {
       TalentUtil.notification.show(error, "error", null, null);
     }
-  }
-
-  render() {
-    return (
-      this.state.showEditSection ? this.renderEdit() : this.renderDisplay()
-    )
   }
 
   renderEdit() {
@@ -294,4 +288,11 @@ export class CompanyDetailSection extends Component {
       </div>
     )
   }
+  
+  render() {
+    return (
+      this.state.showEditSection ? this.renderEdit() : this.renderDisplay()
+    )
+  }
+  
 }
