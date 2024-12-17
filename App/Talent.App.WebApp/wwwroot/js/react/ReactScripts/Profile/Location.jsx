@@ -233,7 +233,7 @@ export class Nationality extends React.Component {
                         <div className='field'>
                             <Select
                                 name="nationality"
-                                selectedOption={this.props.nationalityData}
+                                selectedOption={this.props.nationalityData || ""}
                                 controlFunc={this.handleChange}
                                 options={countries}
                                 placeholder="Select your nationality"
