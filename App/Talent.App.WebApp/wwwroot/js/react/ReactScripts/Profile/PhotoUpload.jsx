@@ -114,7 +114,7 @@ export default class PhotoUpload extends Component {
 
     render() {
         let showProfileImg = null;
-        if (this.state.imageSrc === null) {
+        if ((this.state.imageSrc === null) || (this.state.imageSrc === '')) {
             showProfileImg = (
                 <span key="new">
                     <i 
