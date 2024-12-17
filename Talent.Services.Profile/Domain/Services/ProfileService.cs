@@ -43,10 +43,92 @@ namespace Talent.Services.Profile.Domain.Services
             _fileService = fileService;
         }
 
-        public bool AddNewLanguage(AddLanguageViewModel language)
+        public async Task<bool> AddUpdateLanguage(AddLanguageViewModel newLanguage, string userId)
         {
-            //Your code here;
-            throw new NotImplementedException();
+            try
+            {
+                if (userId != null)
+                {
+                    User existingTalent = (await _userRepository.GetByIdAsync(userId));
+
+                    existingTalent.UpdatedBy = userId;
+                    existingTalent.UpdatedOn = DateTime.Now;
+
+                    bool isNewLanguage = true;
+                    var newLanguages = new List<UserLanguage>();
+                    foreach (var item in existingTalent.Languages)
+                    {
+                        if (item.Id == newLanguage.Id)
+                        {
+                            UpdateLanguageFromView(newLanguage, item);
+                            isNewLanguage = false;
+                        }
+                        newLanguages.Add(item);
+                    }
+
+                    if (isNewLanguage)
+                    {
+                        var language = new UserLanguage
+                        {
+                            Id = ObjectId.GenerateNewId().ToString(),
+                            IsDeleted = false,
+                            UserId = existingTalent.Id
+                        };
+                        UpdateLanguageFromView(newLanguage, language);
+                        newLanguages.Add(language);
+                    }
+
+                    existingTalent.Languages = newLanguages;
+                    await _userRepository.Update(existingTalent);
+                    return true;
+                }
+                return false;
+            }
+            catch (MongoException e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteLanguage(AddLanguageViewModel language, string userId)
+        {
+                        try
+            {
+                if (userId != null)
+                {
+                    User existingTalent = (await _userRepository.GetByIdAsync(userId));
+
+                    existingTalent.UpdatedBy = userId;
+                    existingTalent.UpdatedOn = DateTime.Now;
+
+                    bool languageFound = false;
+                    var newLanguages = new List<UserLanguage>();
+                    foreach (var item in existingTalent.Languages)
+                    {
+                        if (item.Id == language.Id)
+                        {
+                            item.IsDeleted = true;
+                            languageFound = true;
+                        }
+                        newLanguages.Add(item);
+                    }
+                    if (languageFound)
+                    {
+                        existingTalent.Languages = newLanguages;
+                        await _userRepository.Update(existingTalent);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                return false;
+            }
+            catch (MongoException e)
+            {
+                return false;
+            }
         }
 
         public async Task<bool> AddUpdateSkill(AddSkillViewModel newSkill, string userId)
@@ -128,7 +210,6 @@ namespace Talent.Services.Profile.Domain.Services
                     {
                         return false;
                     }
-                    
                 }
                 return false;
             }
@@ -490,6 +571,12 @@ namespace Talent.Services.Profile.Domain.Services
         {
             original.ExperienceLevel = model.Level;
             original.Skill = model.Name;
+        }
+
+        protected void UpdateLanguageFromView(AddLanguageViewModel model, UserLanguage original)
+        {
+            original.LanguageLevel = model.Level;
+            original.Language = model.Name;
         }
 
         #endregion
