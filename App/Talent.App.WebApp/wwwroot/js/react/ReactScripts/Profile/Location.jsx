@@ -70,7 +70,7 @@ export class Address extends React.Component {
             this.closeEdit();
           } catch (error) {
             TalentUtil.notification.show(error, "error", null, null);
-          }
+        }
     }
 
     renderEdit() {
@@ -199,12 +199,49 @@ export class Address extends React.Component {
 export class Nationality extends React.Component {
     constructor(props) {
         super(props)
-       
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event){
+        if (event.target.value) {
+            const newData = {};
+            newData[event.target.name] = event.target.value;
+            this.props.saveProfileData(newData);
+        }
+        else {
+            TalentUtil.notification.show("Invalid nationality", "error", null, null);
+        }
     }
 
     
     render() {
-
+        let countries = [];
+        try {
+            if (Countries && typeof Countries === 'object' && !Array.isArray(Countries) && Object.keys(Countries).length > 0) {
+                countries = Object.keys(Countries).map(c => ({ value: c, title: c }));
+            }
+        }
+        catch (error) {
+            console.error('Error processing Countries:', error);
+        }
         
+        return(
+            <div className="ui grid">
+                <div className='row'>
+                    <div className='ui sixteen wide column'>
+                        <div className='field'>
+                            <Select
+                                name="nationality"
+                                selectedOption={this.props.nationalityData || ""}
+                                controlFunc={this.handleChange}
+                                options={countries}
+                                placeholder="Select your nationality"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 }

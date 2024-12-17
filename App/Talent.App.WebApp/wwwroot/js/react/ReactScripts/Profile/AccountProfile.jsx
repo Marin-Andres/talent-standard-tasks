@@ -215,10 +215,10 @@ export default class AccountProfile extends React.Component {
                                             title='Nationality'
                                             tooltip='Select your nationality'
                                         >
-                                            {/* <Nationality
+                                            <Nationality
                                                 nationalityData={this.state.profileData.nationality}
                                                 saveProfileData={this.updateAndSaveData}
-                                            /> */}
+                                            />
                                         </FormItemWrapper>
                                         <FormItemWrapper
                                             title='Languages'
