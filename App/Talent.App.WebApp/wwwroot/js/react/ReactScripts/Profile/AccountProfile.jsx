@@ -144,19 +144,20 @@ export default class AccountProfile extends React.Component {
                 data: JSON.stringify(this.state.profileData),
                 success: function (res) {
                     if (res.success == true) {
-                        TalentUtil.notification.show("Profile updated successfully", "success", null, null)
+                        TalentUtil.notification.show("Profile updated successfully", "success", null, null);
+                        this.loadData();                    
                     } else {
-                        TalentUtil.notification.show("Profile did not update successfully", "error", null, null)
+                        TalentUtil.notification.show("Profile did not update successfully", "error", null, null);
                     }
 
                 }.bind(this),
                 error: function (res) {
-                    TalentUtil.notification.show("Error while saving User details", "error", null, null);
+                    TalentUtil.notification.show("Profile did not update successfully", "error", null, null);
                 }
             })
         }
         catch (error) {
-            console.log(error);
+            TalentUtil.notification.show("Profile did not update successfully", "error", null, null);
         }
     }
 
