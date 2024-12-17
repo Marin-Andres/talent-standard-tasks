@@ -369,7 +369,15 @@ namespace Talent.Services.Profile.Controllers
             {
                 String talentId = String.IsNullOrWhiteSpace(Id) ? _userAppContext.CurrentUserId : Id;
                 var userProfile = await _profileService.GetTalentProfile(talentId);
-                string profilePhotoUrl = await _documentService.GetPresignedFileURL(userProfile.ProfilePhoto, FileType.ProfilePhoto);
+                string profilePhotoUrl = "";
+                if (userProfile.ProfilePhoto != null)
+                {
+                    profilePhotoUrl = await _documentService.GetPresignedFileURL(userProfile.ProfilePhoto, FileType.ProfilePhoto);
+                }
+                else
+                {
+                    profilePhotoUrl = "";
+                }
                 return Json(new { Success = true, data = profilePhotoUrl });
             }
             catch (Exception e)
