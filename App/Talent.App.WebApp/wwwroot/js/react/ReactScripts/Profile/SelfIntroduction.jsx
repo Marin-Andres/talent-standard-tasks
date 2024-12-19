@@ -47,7 +47,7 @@ export default class SelfIntroduction extends React.Component {
                         name="summary"
                         placeholder="Please provide a short summary about yourself"
                         maxLength="150"
-                        value = {this.props.summary}
+                        value = {this.props.summary || ""}
                         onChange={this.handleChange}
                     />
                     <label>Summary must be no more than 150 characters.</label>
@@ -57,7 +57,7 @@ export default class SelfIntroduction extends React.Component {
                         name="description"
                         placeholder="Please tell us about any hobbies, additional expertise, or anything else you’d like to add."
                         maxLength="600"
-                        value={this.props.description}
+                        value={this.props.description || ""}
                         onChange={this.handleChange}
                     />
                     <label>Description must be between 150-600 characters.</label>
