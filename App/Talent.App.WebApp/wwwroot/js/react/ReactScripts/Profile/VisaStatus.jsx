@@ -77,7 +77,7 @@ export default class VisaStatus extends React.Component {
                             <label>Visa type</label>
                             <Select
                                 name="visaStatus"
-                                selectedOption={this.props.visaStatus}
+                                selectedOption={this.props.visaStatus || ""}
                                 controlFunc={this.handleChange}
                                 options={visaOptions}
                                 placeholder="Select your visa type"
