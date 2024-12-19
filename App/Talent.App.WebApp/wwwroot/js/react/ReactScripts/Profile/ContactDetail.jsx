@@ -2,7 +2,7 @@
 import Cookies from 'js-cookie';
 import { ChildSingleInput } from '../Form/SingleInput.jsx';
 import { Location } from '../Employer/CreateJob/Location.jsx';
-import * as Yup from 'yup';
+import { individualDetailsSchema } from "./ValidationSchemas.js";
 export class IndividualDetailSection extends Component {
   constructor(props) {
     super(props)
@@ -20,12 +20,7 @@ export class IndividualDetailSection extends Component {
       showEditSection: false,
       newContact: details
     }
-    this.schema = Yup.object().shape({
-      firstName: Yup.string().required('First name required'),
-      lastName: Yup.string().required('Last name required'),
-      email: Yup.string().email('Email is not valid').required('Email required'),
-      phone: Yup.string().matches(TalentUtil.phoneRegExp(), 'Phone number is not valid'),
-    });
+    this.schema = individualDetailsSchema;
 
     this.openEdit = this.openEdit.bind(this)
     this.closeEdit = this.closeEdit.bind(this)
@@ -71,12 +66,6 @@ export class IndividualDetailSection extends Component {
     }
   }
 
-  render() {
-    return (
-      this.state.showEditSection ? this.renderEdit() : this.renderDisplay()
-    )
-  }
-
   renderEdit() {
     return (
       <div className='ui sixteen wide column'>
@@ -84,7 +73,7 @@ export class IndividualDetailSection extends Component {
           inputType="text"
           label="First Name"
           name="firstName"
-          value={this.state.newContact.firstName}
+          value={this.state.newContact.firstName || ""}
           controlFunc={this.handleChange}
           maxLength={80}
           placeholder="Enter your first name"
@@ -94,7 +83,7 @@ export class IndividualDetailSection extends Component {
           inputType="text"
           label="Last Name"
           name="lastName"
-          value={this.state.newContact.lastName}
+          value={this.state.newContact.lastName || ""}
           controlFunc={this.handleChange}
           maxLength={80}
           placeholder="Enter your last name"
@@ -104,7 +93,7 @@ export class IndividualDetailSection extends Component {
           inputType="text"
           label="Email address"
           name="email"
-          value={this.state.newContact.email}
+          value={this.state.newContact.email || ""}
           controlFunc={this.handleChange}
           maxLength={80}
           placeholder="Enter an email"
@@ -115,7 +104,7 @@ export class IndividualDetailSection extends Component {
           inputType="text"
           label="Phone number"
           name="phone"
-          value={this.state.newContact.phone}
+          value={this.state.newContact.phone || ""}
           controlFunc={this.handleChange}
           maxLength={12}
           placeholder="Enter a phone number"
@@ -147,9 +136,15 @@ export class IndividualDetailSection extends Component {
       </div>
     )
   }
+
+  render() {
+    return (
+      this.state.showEditSection ? this.renderEdit() : this.renderDisplay()
+    )
+  }
 }
 
-
+import { companyDetailsSchema } from "./ValidationSchemas.js";
 export class CompanyDetailSection extends Component {
   constructor(props) {
     super(props)
@@ -166,11 +161,7 @@ export class CompanyDetailSection extends Component {
       showEditSection: false,
       newContact: details
     }
-    this.schema = Yup.object().shape({
-      name: Yup.string().required('Name required'),
-      email: Yup.string().email('Email is not valid').required('Email required'),
-      phone: Yup.string().matches(TalentUtil.phoneRegExp(), 'Phone number is not valid'),
-    });
+    this.schema = companyDetailsSchema;
 
 
     this.openEdit = this.openEdit.bind(this)
@@ -215,12 +206,6 @@ export class CompanyDetailSection extends Component {
     } catch (error) {
       TalentUtil.notification.show(error, "error", null, null);
     }
-  }
-
-  render() {
-    return (
-      this.state.showEditSection ? this.renderEdit() : this.renderDisplay()
-    )
   }
 
   renderEdit() {
@@ -294,4 +279,11 @@ export class CompanyDetailSection extends Component {
       </div>
     )
   }
+  
+  render() {
+    return (
+      this.state.showEditSection ? this.renderEdit() : this.renderDisplay()
+    )
+  }
+  
 }

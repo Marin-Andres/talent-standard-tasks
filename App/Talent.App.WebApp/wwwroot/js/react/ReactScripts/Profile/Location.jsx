@@ -156,8 +156,12 @@ export class Address extends React.Component {
                 </div>
             </div>
             <div className='row'>
-                <button type="button" className="ui teal button" onClick={this.saveData}>Save</button>
-                <button type="button" className="ui button" onClick={this.closeEdit}>Cancel</button>
+            <div className='ui six wide column'>
+                    <div className='field'>
+                        <button type="button" className="ui teal button" onClick={this.saveData}>Save</button>
+                        <button type="button" className="ui button" onClick={this.closeEdit}>Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
         )
@@ -212,16 +216,32 @@ export class Nationality extends React.Component {
 
     
     render() {
-        const countries = Object.keys(Countries).map(c => ({value: c, title: c}));
-
+        let countries = [];
+        try {
+            if (Countries && typeof Countries === 'object' && !Array.isArray(Countries) && Object.keys(Countries).length > 0) {
+                countries = Object.keys(Countries).map(c => ({ value: c, title: c }));
+            }
+        }
+        catch (error) {
+            console.error('Error processing Countries:', error);
+        }
+        
         return(
-            <Select
-                            name="nationality"
-                            selectedOption={this.props.nationalityData}
-                            controlFunc={this.handleChange}
-                            options={countries}
-                            placeholder="Select your nationality"
-                        />
+            <div className="ui grid">
+                <div className='row'>
+                    <div className='ui sixteen wide column'>
+                        <div className='field'>
+                            <Select
+                                name="nationality"
+                                selectedOption={this.props.nationalityData || ""}
+                                controlFunc={this.handleChange}
+                                options={countries}
+                                placeholder="Select your nationality"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
