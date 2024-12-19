@@ -98,7 +98,7 @@ TalentUtil.phoneRegExp = function () {
 }
 
 TalentUtil.linkedInRegExp = function () {
-    return /^((http(s)?:\/\/)?(www\.)?linkedin\.([a-z]+)\/in\/([a-zA-Z0-9._-]+)\/?)?$/
+    return /^((http(s)?:\/\/)?(www\.)?linkedin\.com\/([a-zA-Z0-9._-]+)\/?)/
 }
 
 TalentUtil.githubRegExp = function () {
