@@ -75,7 +75,7 @@ export default class CompanyProfile extends React.Component {
                   
                     <div className="center aligned header">{name}</div>
                     <div className="center aligned address">
-                        <p>{city}, {country}</p>
+                        <p><Icon name="map marker alternate" />{city}, {country}</p>
                     </div>
                     <div className="center aligned description">
                         <p>{skillString}</p>
