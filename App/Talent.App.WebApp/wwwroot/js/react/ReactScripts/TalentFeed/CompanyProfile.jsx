@@ -49,7 +49,7 @@ export default class CompanyProfile extends React.Component {
         const name = employerData ? employerData.companyContact.name : '';
         const city = employerData ? employerData.companyContact.location.city : '';
         const country = employerData ? employerData.companyContact.location.country : '';
-        const profilePhoto = "a";//mployerData ? employerData.profilePhotoUrl : '';
+        const profilePhoto = employerData ? employerData.profilePhotoUrl : null;
         const phone = employerData ? employerData.companyContact.phone : '';
         const email = employerData ? employerData.companyContact.email : '';
         const skills = employerData ? employerData.skills : [];
@@ -65,14 +65,12 @@ export default class CompanyProfile extends React.Component {
                 <div className="content">
                 <div className="center aligned author">
                     {profilePhoto ? (
-                        <img className="ui avatar image" src="/images/image.png" alt="Profile Photo" />
+                        <img className="ui circular image" src={profilePhoto} alt="Profile Photo" />
                     ) : (
-                        <div className="ui placeholder">
-                            <div className="image"></div>
-                        </div>
+                        <img className="ui circular tiny image" src="/images/image.png" alt="Profile Photo" />
                     )}
                 </div>
-                  
+                <div className="content">
                     <div className="center aligned header">{name}</div>
                     <div className="center aligned address">
                         <p><Icon name="map marker alternate" />{city}, {country}</p>
@@ -80,6 +78,7 @@ export default class CompanyProfile extends React.Component {
                     <div className="center aligned description">
                         <p>{skillString}</p>
                     </div>
+                </div>
                 </div>
                 <div className="extra content">
                     <div className="left aligned">
