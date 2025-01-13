@@ -52,9 +52,7 @@ export default class TalentFeed extends React.Component {
                     <div className="eight wide column">
                         <TalentCard />
                         <TalentCard />
-                        <p id="load-more-loading">
-                            <img src="/images/rolling.gif" alt="Loading…" />
-                        </p>
+            
                     </div>
                     <div className="four wide column">
                         <div className="ui card">
