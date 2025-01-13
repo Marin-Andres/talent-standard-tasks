@@ -52,8 +52,8 @@ export default class TalentCard extends React.Component {
                 <Button icon="file alternate" />
                 <Button icon="linkedin" />
                 <Button icon="github" />
-                <Button icon="c sharp" />
             </Button.Group>
+            <p>C#</p>
             </Card.Content>
         </Card>
         );
