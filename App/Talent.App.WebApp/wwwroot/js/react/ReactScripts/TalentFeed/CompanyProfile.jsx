@@ -65,9 +65,9 @@ export default class CompanyProfile extends React.Component {
                 <Card.Content>
                 <div className="center aligned author">
                     {profilePhoto ? (
-                        <img className="ui circular image" src={profilePhoto} alt="Profile Photo" />
+                        <Image avatar src={profilePhoto} alt="Profile Photo" />
                     ) : (
-                        <img className="ui circular tiny image" src="/images/image.png" alt="Profile Photo" />
+                        <Image avatar src="/images/image.png" alt="Profile Photo" />
                     )}
                 </div>
                 <div className="center aligned header">{name}</div>
