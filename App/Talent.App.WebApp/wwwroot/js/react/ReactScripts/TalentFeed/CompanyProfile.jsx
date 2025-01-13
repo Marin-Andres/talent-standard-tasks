@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import Cookies from 'js-cookie';
-import { Icon, Loader } from 'semantic-ui-react';
+import { Card, Icon, Loader, Image } from 'semantic-ui-react';
 
 export default class CompanyProfile extends React.Component {
     constructor(props) {
@@ -61,8 +61,8 @@ export default class CompanyProfile extends React.Component {
         }
 
         return (
-            <div className="ui card">
-                <div className="content">
+            <Card>
+                <Card.Content>
                 <div className="center aligned author">
                     {profilePhoto ? (
                         <img className="ui circular image" src={profilePhoto} alt="Profile Photo" />
@@ -70,8 +70,8 @@ export default class CompanyProfile extends React.Component {
                         <img className="ui circular tiny image" src="/images/image.png" alt="Profile Photo" />
                     )}
                 </div>
-                <div className="content">
-                    <div className="center aligned header">{name}</div>
+                <div className="center aligned header">{name}</div>
+                <Card.Meta>
                     <div className="center aligned address">
                         <p
                             ><i class="fas fa-map-marker-alt"></i>
@@ -79,18 +79,18 @@ export default class CompanyProfile extends React.Component {
                             {city}, {country}
                         </p>
                     </div>
+                </Card.Meta>
                     <div className="center aligned description">
                         <p>{skillString}</p>
                     </div>
-                </div>
-                </div>
-                <div className="extra content">
+                </Card.Content>
+                <Card.Content extra>
                     <div className="left aligned">
                         <p><Icon name='phone' />: {phone}</p>
                         <p><Icon name='mail' />: {email}</p>
                     </div>
-                </div>
-            </div>
+                </Card.Content>
+            </Card>
         );
     }
 }
