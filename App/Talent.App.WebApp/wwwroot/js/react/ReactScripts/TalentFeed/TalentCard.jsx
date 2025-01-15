@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types'
-import { Card, Grid, Button, Image, Popup, Icon } from 'semantic-ui-react'
+import { Card, Grid, Button, Image, Popup, Icon, ButtonGroup } from 'semantic-ui-react'
 
 export default class TalentCard extends React.Component {
     constructor(props) {
@@ -31,7 +31,7 @@ export default class TalentCard extends React.Component {
         const cardContentRow = showVideo ? (
             <Grid.Row columns={1}>
                 <ReactPlayer
-                    url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+                    url={null}
                     playing={true}
                     controls={true}
                     width='100%'
@@ -42,33 +42,38 @@ export default class TalentCard extends React.Component {
             <Grid.Row columns={2}>
                 <Grid.Column width={8}>
                     <Image
-                        src="https://via.placeholder.com/150"
-                        size="tiny"
-                        circular
-                        style={{ marginTop: "5px" }}
+                        src="/images/image.png"
+                        
                     />
                 </Grid.Column>
                 <Grid.Column width={8}>
-                    <Card.Meta>Talent snapshot</Card.Meta>
-                    <Card.Description>
-                        <p>
-                            <strong>Current Employer:</strong> ABC
-                        </p>
-                        <p>
-                            <strong>Visa Status:</strong> Citizen
-                        </p>
-                        <p>
-                            <strong>Position:</strong> Software Developer
-                        </p>
-                    </Card.Description>
+                    <Card>
+                        <Card.Header>Talent snapshot</Card.Header>
+                        <Card.Description>
+                            <label>CURRENT EMPLOYER</label>
+                            <p>ABC</p>
+                            <label>VISA STATUS</label>
+                            <p>Citizen</p>
+                            <label>POSITION</label>
+                            <p>Software Developer</p>
+                        </Card.Description>
+                    </Card>
                 </Grid.Column>
             </Grid.Row>
         );            
         return (
         <Card fluid>
             <Card.Header>
-                Ru (Talent) Ng
-                <Icon name="star outline" style={{ float: "right" }} />
+                <Grid>
+                    <Grid.Row columns={2}>
+                        <Grid.Column width={12}>
+                            <h5>Ru (Talent) Ng</h5>
+                        </Grid.Column>
+                        <Grid.Column width={4}>
+                            <Icon name="star outline" style={{ float: "right" }} />
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
             </Card.Header>
             <Card.Content>
             <Grid>
@@ -82,7 +87,11 @@ export default class TalentCard extends React.Component {
                 <Button icon="linkedin" />
                 <Button icon="github" />
             </Button.Group>
-            <p>C#</p>
+            </Card.Content>
+            <Card.Content extra>
+                <ButtonGroup>
+                    <Button basic color='blue'>C#</Button>
+                </ButtonGroup>
             </Card.Content>
         </Card>
         );
