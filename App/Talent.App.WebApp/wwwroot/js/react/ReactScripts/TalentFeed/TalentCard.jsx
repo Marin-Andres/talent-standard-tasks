@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types'
-import { Card, Grid, Button, Image, Popup, Icon, ButtonGroup } from 'semantic-ui-react'
+import { Form, Card, Grid, Button, Image, Popup, Icon, ButtonGroup } from 'semantic-ui-react'
 
 export default class TalentCard extends React.Component {
     constructor(props) {
@@ -24,9 +24,9 @@ export default class TalentCard extends React.Component {
     render() {
         const { showVideo } = this.state;
         const switchButton = showVideo ? (
-            <Button icon="user" onClick={this.showTalentSnapshot} />
+            <Button basic icon="user" onClick={this.showTalentSnapshot} />
         ) : (
-            <Button icon="video" onClick={this.showVideo} />
+            <Button basic icon="video" onClick={this.showVideo} />
         );
         const cardContentRow = showVideo ? (
             <Grid.Row columns={1}>
@@ -47,16 +47,26 @@ export default class TalentCard extends React.Component {
                     />
                 </Grid.Column>
                 <Grid.Column width={8}>
-                    <Card>
+                <Card>
+                    <Card.Content>
                         <Card.Header>Talent snapshot</Card.Header>
                         <Card.Description>
-                            <label>CURRENT EMPLOYER</label>
-                            <p>ABC</p>
-                            <label>VISA STATUS</label>
-                            <p>Citizen</p>
-                            <label>POSITION</label>
-                            <p>Software Developer</p>
+                        <Form>
+                            <Form.Field>
+                                <label>CURRENT EMPLOYER</label>
+                                <p>ABC</p>
+                            </Form.Field>
+                            <Form.Field>
+                                <label>VISA STATUS</label>
+                                <p>Citizen</p>
+                            </Form.Field>
+                            <Form.Field>
+                                <label>POSITION</label>
+                                <p>Software Developer</p>
+                            </Form.Field>
+                        </Form>
                         </Card.Description>
+                    </Card.Content>
                     </Card>
                 </Grid.Column>
             </Grid.Row>
@@ -83,9 +93,9 @@ export default class TalentCard extends React.Component {
             <Card.Content extra>
             <Button.Group fluid>
                 {switchButton}
-                <Button icon="file pdf outline" />
-                <Button icon="linkedin" />
-                <Button icon="github" />
+                <Button basic icon="file pdf outline" />
+                <Button basic icon="linkedin" />
+                <Button basic icon="github" />
             </Button.Group>
             </Card.Content>
             <Card.Content extra>
