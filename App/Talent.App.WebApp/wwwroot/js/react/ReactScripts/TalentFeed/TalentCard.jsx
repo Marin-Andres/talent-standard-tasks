@@ -28,75 +28,77 @@ export default class TalentCard extends React.Component {
         ) : (
             <Button basic icon="video" onClick={this.showVideo} />
         );
+        const talentVideoUrl = null;
+        const videoObj = talentVideoUrl ? (
+            <ReactPlayer
+                url={talentVideoUrl}
+                playing={false}
+                controls={true}
+                width='100%'
+                height='100%'
+                fluid={true}
+            />
+         ) : (
+            <Image 
+                src="/images/video_placeholder.png" 
+                fluid
+            />
+         );
         const cardContentRow = showVideo ? (
-            <Grid.Row columns={1}>
-                <ReactPlayer
-                    url={null}
-                    playing={true}
-                    controls={true}
-                    width='100%'
-                    height='100%'
-                />
-            </Grid.Row>
+            <div>
+                {videoObj}
+            </div>
         ) : (
-            <Grid.Row columns={2}>
-                <Grid.Column width={8}>
-                    <Image
-                        src="/images/image.png"
-                        
-                    />
-                </Grid.Column>
-                <Grid.Column width={8}>
-                <Card>
-                    <Card.Content>
-                        <Card.Header>Talent snapshot</Card.Header>
-                        <Card.Description>
-                        <Form>
-                            <Form.Field>
-                                <label>CURRENT EMPLOYER</label>
-                                <p>ABC</p>
-                            </Form.Field>
-                            <Form.Field>
-                                <label>VISA STATUS</label>
-                                <p>Citizen</p>
-                            </Form.Field>
-                            <Form.Field>
-                                <label>POSITION</label>
-                                <p>Software Developer</p>
-                            </Form.Field>
-                        </Form>
-                        </Card.Description>
-                    </Card.Content>
-                    </Card>
-                </Grid.Column>
-            </Grid.Row>
+            <Grid>
+                <Grid.Row columns={2}>
+                    <Grid.Column width={8}>
+                        <Image
+                            src="/images/avatar/small/elliot.jpg"
+                            fluid
+                        />
+                    </Grid.Column>
+                    <Grid.Column width={8}>
+                    <Card>
+                        <Card.Content>
+                            <Card.Header>Talent snapshot</Card.Header>
+                            <Card.Description>
+                            <Form>
+                                <Form.Field>
+                                    <label>CURRENT EMPLOYER</label>
+                                    <p>ABC</p>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label>VISA STATUS</label>
+                                    <p>Citizen</p>
+                                </Form.Field>
+                                <Form.Field>
+                                    <label>POSITION</label>
+                                    <p>Software Developer</p>
+                                </Form.Field>
+                            </Form>
+                            </Card.Description>
+                        </Card.Content>
+                        </Card>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         );            
         return (
         <Card fluid>
             <Card.Header>
-                <Grid>
-                    <Grid.Row columns={2}>
-                        <Grid.Column width={12}>
-                            <h5>Ru (Talent) Ng</h5>
-                        </Grid.Column>
-                        <Grid.Column width={4}>
-                            <Icon name="star outline" style={{ float: "right" }} />
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
+                    Ru (Talent) Ng
+                    <Icon name="star outline" style={{ float: "right" }} />
             </Card.Header>
             <Card.Content>
-            <Grid>
                 {cardContentRow}
-            </Grid>
             </Card.Content>
             <Card.Content extra>
-            <Button.Group fluid>
-                {switchButton}
-                <Button basic icon="file pdf outline" />
-                <Button basic icon="linkedin" />
-                <Button basic icon="github" />
-            </Button.Group>
+                <Button.Group fluid>
+                    {switchButton}
+                    <Button basic icon="file pdf outline" />
+                    <Button basic icon="linkedin" />
+                    <Button basic icon="github" />
+                </Button.Group>
             </Card.Content>
             <Card.Content extra>
                 <ButtonGroup>
