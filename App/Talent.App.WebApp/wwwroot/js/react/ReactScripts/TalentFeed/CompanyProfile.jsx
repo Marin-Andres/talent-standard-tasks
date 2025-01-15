@@ -74,7 +74,7 @@ export default class CompanyProfile extends React.Component {
                 <Card.Meta>
                     <div className="center aligned address">
                         <p
-                            ><i class="fas fa-map-marker-alt"></i>
+                            ><i className="fas fa-map-marker-alt"></i>
                             &nbsp;
                             {city}, {country}
                         </p>
