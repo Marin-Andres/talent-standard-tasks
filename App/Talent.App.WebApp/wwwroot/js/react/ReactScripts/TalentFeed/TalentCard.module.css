@@ -6,37 +6,21 @@
     margin: 0px 0;
     padding: 0px;
   }
-/* Adjust spacing around the card */
-.talent-card {
-    margin: 20px auto; /* Center the card and add vertical spacing */
-    padding: 15px; /* Add internal spacing */
+
+  /* Style talent card header */
+  .card-header {
+    padding: 1em !important; /* Remove padding from the card content */
+  }
+
+  /* Style talent card content */
+  .card-content {
+    padding: 0 !important; /* Remove padding from the card content */
   }
   
-  /* Style the video or placeholder image container */
-  .video-container {
-    margin-bottom: 15px; /* Add spacing below the video */
-  }
-  
-  /* Customize the card header */
-  .talent-card-header {
-    font-size: 1.2em;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  /* Style the extra content buttons */
-  .button-group {
-    margin-top: 10px; /* Add spacing above button group */
-  }
-  
-  /* Additional adjustments for responsiveness */
-  @media (max-width: 768px) {
-    .talent-card {
-      padding: 10px;
-    }
-  
-    .video-container {
-      margin-bottom: 10px;
-    }
-  }
-  
+  /* Style talent card grid column */
+   .talent-gridColumnLeft {
+    padding-right: 0 !important; /* Remove padding from the card content */
+  } 
+  .talent-gridColumnRight {
+    padding-left: 0 !important; /* Remove padding from the card content */
+  } 

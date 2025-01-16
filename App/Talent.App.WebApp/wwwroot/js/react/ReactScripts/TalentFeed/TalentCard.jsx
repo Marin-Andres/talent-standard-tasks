@@ -46,20 +46,20 @@ export default class TalentCard extends React.Component {
             />
          );
         const cardContentRow = showVideo ? (
-            <div className={styles['video-container']}>
+            <div>
                 {videoObj}
             </div>
         ) : (
             <Grid>
                 <Grid.Row columns={2}>
-                    <Grid.Column className={styles['talent-gridColumn']} width={8}>
+                    <Grid.Column className={styles['talent-gridColumnLeft']} width={8}>
                         <Image
                             src="/images/avatar/small/elliot.jpg"
                             fluid
                         />
                     </Grid.Column>
-                    <Grid.Column className={styles['talent-gridColumn']} width={8}>
-                    <Card>
+                    <Grid.Column className={styles['talent-gridColumnRight']} width={8}>
+                    <Card fluid>
                         <Card.Content>
                             <Card.Header>Talent snapshot</Card.Header>
                             <Card.Description>
@@ -86,14 +86,14 @@ export default class TalentCard extends React.Component {
         );            
         return (
         <Card fluid>
-            <Card.Header>
+            <Card.Header className={styles['card-header']}>
                     Ru (Talent) Ng
-                    <Icon name="star outline" style={{ float: "right" }} />
+                    <Icon name="star outline" size='large' style={{ float: "right" }} />
             </Card.Header>
-            <Card.Content>
+            <Card.Content className={styles['card-content']}>
                 {cardContentRow}
             </Card.Content>
-            <Card.Content extra>
+            <Card.Content extra  className={styles['card-content']}>
                 <Button.Group fluid>
                     {switchButton}
                     <Button basic icon="file pdf outline" />
