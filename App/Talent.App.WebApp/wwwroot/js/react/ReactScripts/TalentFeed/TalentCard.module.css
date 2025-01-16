@@ -24,3 +24,8 @@
   .talent-gridColumnRight {
     padding-left: 0 !important; /* Remove padding from the card content */
   } 
+
+  /* Style talent details */
+  .talent-details {
+    padding: 1em !important; /* Adjust padding from the card content */
+  }

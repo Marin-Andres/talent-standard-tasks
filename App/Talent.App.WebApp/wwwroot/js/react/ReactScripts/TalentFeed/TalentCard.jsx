@@ -59,10 +59,8 @@ export default class TalentCard extends React.Component {
                         />
                     </Grid.Column>
                     <Grid.Column className={styles['talent-gridColumnRight']} width={8}>
-                    <Card fluid>
-                        <Card.Content>
-                            <Card.Header>Talent snapshot</Card.Header>
-                            <Card.Description>
+                        <div className={styles['talent-details']}>
+                            <h4>Talent snapshot</h4>
                             <Form>
                                 <Form.Field>
                                     <label>CURRENT EMPLOYER</label>
@@ -77,9 +75,7 @@ export default class TalentCard extends React.Component {
                                     <p>Software Developer</p>
                                 </Form.Field>
                             </Form>
-                            </Card.Description>
-                        </Card.Content>
-                        </Card>
+                        </div>
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
