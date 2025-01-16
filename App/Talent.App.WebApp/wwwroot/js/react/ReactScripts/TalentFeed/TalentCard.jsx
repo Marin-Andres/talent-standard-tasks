@@ -1,7 +1,8 @@
 ﻿import React from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types'
-import { Form, Card, Grid, Button, Image, Popup, Icon, ButtonGroup } from 'semantic-ui-react'
+import { Form, Card, Grid, Button, Image, Popup, Icon, ButtonGroup, GridColumn } from 'semantic-ui-react'
+import styles from './TalentCard.module.css';
 
 export default class TalentCard extends React.Component {
     constructor(props) {
@@ -45,19 +46,19 @@ export default class TalentCard extends React.Component {
             />
          );
         const cardContentRow = showVideo ? (
-            <div>
+            <div className={styles['video-container']}>
                 {videoObj}
             </div>
         ) : (
             <Grid>
                 <Grid.Row columns={2}>
-                    <Grid.Column width={8}>
+                    <Grid.Column className={styles['talent-gridColumn']} width={8}>
                         <Image
                             src="/images/avatar/small/elliot.jpg"
                             fluid
                         />
                     </Grid.Column>
-                    <Grid.Column width={8}>
+                    <Grid.Column className={styles['talent-gridColumn']} width={8}>
                     <Card>
                         <Card.Content>
                             <Card.Header>Talent snapshot</Card.Header>
