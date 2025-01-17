@@ -80,12 +80,13 @@ export default class TalentFeed extends React.Component {
                 dataType: "json",
                 success: function (res) {
                     const newFeedData = res.data;
-      
-                    this.setState({
-                        feedData: [...feedData, ...newFeedData],
-                        loadPosition: loadPosition + loadNumber,
-                        hasMoreData: newFeedData.length === loadNumber, //if the length of the new data is less than the load number, then there is no more data to load
-                    });
+                    if (newFeedData) {
+                        this.setState({
+                            feedData: [...feedData, ...newFeedData],
+                            loadPosition: loadPosition + loadNumber,
+                            hasMoreData: newFeedData.length === loadNumber, //if the length of the new data is less than the load number, then there is no more data to load
+                        });
+                    }
                 }.bind(this),
                 error: function (res) {
                     console.log(res.status)
