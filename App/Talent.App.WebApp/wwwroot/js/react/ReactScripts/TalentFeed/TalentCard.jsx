@@ -23,7 +23,12 @@ export default class TalentCard extends React.Component {
     };
     
     render() {
+        const talent = this.props.talent;
         const { showVideo } = this.state;
+        const skills = talent.skills ? talent.skills : [];
+        const skillButtons = skills.map((skill, index) => (
+            <Button key={index} basic color='blue'>{skill}</Button>
+        ));
         const switchButton = showVideo ? (
             <Button basic icon="user" onClick={this.showTalentSnapshot} />
         ) : (
@@ -32,7 +37,7 @@ export default class TalentCard extends React.Component {
         const talentVideoUrl = null;
         const videoObj = talentVideoUrl ? (
             <ReactPlayer
-                url={talentVideoUrl}
+                url={talent.videoUrl}
                 playing={false}
                 controls={true}
                 width='100%'
@@ -54,7 +59,7 @@ export default class TalentCard extends React.Component {
                 <Grid.Row columns={2}>
                     <Grid.Column className={styles['talent-gridColumnLeft']} width={8}>
                         <Image
-                            src="/images/avatar/small/elliot.jpg"
+                            src={talent.photoId}
                             fluid
                         />
                     </Grid.Column>
@@ -64,15 +69,15 @@ export default class TalentCard extends React.Component {
                             <Form>
                                 <Form.Field>
                                     <label>CURRENT EMPLOYER</label>
-                                    <p>ABC</p>
+                                    <p>{talent.currentEmployment}</p>
                                 </Form.Field>
                                 <Form.Field>
                                     <label>VISA STATUS</label>
-                                    <p>Citizen</p>
+                                    <p>{talent.visa}</p>
                                 </Form.Field>
                                 <Form.Field>
                                     <label>POSITION</label>
-                                    <p>Software Developer</p>
+                                    <p>{talent.currentPosition}</p>
                                 </Form.Field>
                             </Form>
                         </div>
@@ -83,7 +88,7 @@ export default class TalentCard extends React.Component {
         return (
         <Card fluid>
             <Card.Header className={styles['card-header']}>
-                    Ru (Talent) Ng
+                    {talent.name}
                     <Icon name="star outline" size='large' style={{ float: "right" }} />
             </Card.Header>
             <Card.Content className={styles['card-content']}>
@@ -92,14 +97,14 @@ export default class TalentCard extends React.Component {
             <Card.Content extra  className={styles['card-content']}>
                 <Button.Group fluid>
                     {switchButton}
-                    <Button basic icon="file pdf outline" />
+                    <Button basic icon="file pdf outline"/>
                     <Button basic icon="linkedin" />
                     <Button basic icon="github" />
                 </Button.Group>
             </Card.Content>
             <Card.Content extra>
                 <ButtonGroup>
-                    <Button basic color='blue'>C#</Button>
+                    {skillButtons}
                 </ButtonGroup>
             </Card.Content>
         </Card>
