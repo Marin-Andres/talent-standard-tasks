@@ -26,6 +26,7 @@ export default class TalentCard extends React.Component {
         const talent = this.props.talent;
         const { showVideo } = this.state;
         const skills = talent.skills ? talent.skills : [];
+        const photoUrl = talent.profilePhotoUrl ? talent.profilePhotoUrl : '/images/image.png';
         const skillButtons = skills.map((skill, index) => (
             <Button key={index} basic color='blue'>{skill}</Button>
         ));
@@ -59,7 +60,7 @@ export default class TalentCard extends React.Component {
                 <Grid.Row columns={2}>
                     <Grid.Column className={styles['talent-gridColumnLeft']} width={8}>
                         <Image
-                            src={talent.photoId}
+                            src={photoUrl}
                             fluid
                         />
                     </Grid.Column>
