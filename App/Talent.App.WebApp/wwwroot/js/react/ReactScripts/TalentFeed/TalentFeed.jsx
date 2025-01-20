@@ -70,7 +70,7 @@ export default class TalentFeed extends React.Component {
         try {
             var cookies = Cookies.get('talentAuthToken');
             $.ajax({
-                url: 'http://localhost:60290/profile/profile/getTalent',
+                url: 'http://localhost:60880/api/mobile/getTalentSnapshotList',
                 headers: {
                     'Authorization': 'Bearer ' + cookies,
                     'Content-Type': 'application/json'
@@ -78,6 +78,10 @@ export default class TalentFeed extends React.Component {
                 type: "GET",
                 contentType: "application/json",
                 dataType: "json",
+                data: {
+                    position: loadPosition,
+                    number: loadNumber
+                },
                 success: function (res) {
                     const newFeedData = res.data;
                     if (newFeedData) {
