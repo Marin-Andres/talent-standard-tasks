@@ -78,7 +78,7 @@ export default class TalentCard extends React.Component {
                                 </Form.Field>
                                 <Form.Field>
                                     <label>POSITION</label>
-                                    <p>{talent.currentPosition}</p>
+                                    <p>{talent.level}</p>
                                 </Form.Field>
                             </Form>
                         </div>
