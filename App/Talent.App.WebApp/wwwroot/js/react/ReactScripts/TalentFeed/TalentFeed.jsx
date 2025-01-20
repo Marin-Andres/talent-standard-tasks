@@ -42,8 +42,13 @@ export default class TalentFeed extends React.Component {
     componentDidMount() {
         this.init();
         this.loadMoreTalentCards();
-        this.setupObserver();
     };
+
+    componentDidUpdate(prevProps, prevState) {
+        if (!prevState.feedData.length && this.state.feedData.length && this.observerTarget.current) {
+            this.setupObserver();
+        }
+    }    
 
     setupObserver() {
         if ('IntersectionObserver' in window) {
@@ -94,7 +99,7 @@ export default class TalentFeed extends React.Component {
                 }.bind(this),
                 error: function (res) {
                     console.log(res.status)
-                }
+                } 
             }) 
         }
         catch (err) {
