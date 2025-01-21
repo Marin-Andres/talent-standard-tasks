@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 import TalentCard from '../TalentFeed/TalentCard.jsx';
 import { Loader } from 'semantic-ui-react';
 import CompanyProfile from '../TalentFeed/CompanyProfile.jsx';
@@ -22,10 +22,14 @@ export default class TalentFeed extends React.Component {
             watchlist: [],
             loaderData: loader,
             loadingFeedData: false,
+            hasMoreData: true,
             companyDetails: null
         }
 
         this.init = this.init.bind(this);
+        this.loadMoreTalentCards = this.loadMoreTalentCards.bind(this);
+        this.setupObserver = this.setupObserver.bind(this);
+        this.observerTarget = React.createRef();
 
     };
 
@@ -36,16 +40,109 @@ export default class TalentFeed extends React.Component {
     }
 
     componentDidMount() {
-        //window.addEventListener('scroll', this.handleScroll);
-        this.init()
+        this.init();
+        this.loadMoreTalentCards();
     };
 
-   
+    componentDidUpdate(prevProps, prevState) {
+        if (!prevState.feedData.length && this.state.feedData.length && this.observerTarget.current) {
+            this.setupObserver();
+        }
+    }    
+
+    setupObserver() {
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    const [ entry ] = entries;
+                    if (entry.isIntersecting && this.state.hasMoreData && !this.state.loadingFeedData) {
+                        this.loadMoreTalentCards();
+                    }
+                },
+                { root: null, threshold: 1.0 }
+            );
+
+            if (this.observerTarget.current) {
+                observer.observe(this.observerTarget.current);
+            }
+        }
+    }
+
+    loadMoreTalentCards() {
+        const { loadNumber, loadPosition, feedData } = this.state;
+        this.setState({ loadingFeedData: true });
+
+        try {
+            var cookies = Cookies.get('talentAuthToken');
+            $.ajax({
+                url: 'http://localhost:60880/api/mobile/getTalentSnapshotList',
+                headers: {
+                    'Authorization': 'Bearer ' + cookies,
+                    'Content-Type': 'application/json'
+                },
+                type: "GET",
+                contentType: "application/json",
+                dataType: "json",
+                data: {
+                    position: loadPosition,
+                    number: loadNumber
+                },
+                success: function (res) {
+                    const newFeedData = res.data;
+                    if (newFeedData) {
+                        this.setState({
+                            feedData: [...feedData, ...newFeedData],
+                            loadPosition: loadPosition + loadNumber,
+                            hasMoreData: newFeedData.length === loadNumber, //if the length of the new data is less than the load number, then there is no more data to load
+                        });
+                    }
+                }.bind(this),
+                error: function (res) {
+                    console.log(res.status)
+                } 
+            }) 
+        }
+        catch (err) {
+            console.log('Error fetching talent data:', err);
+        }
+        finally {
+            this.setState({ loadingFeedData: false });
+        }
+    }
+
     render() {
+        const {feedData, loadingFeedData} = this.state;
+
+        const talentCards = feedData.length === 0 ? (
+            <div className="ui center aligned container">
+                There are no talents found for your recruitment company.
+            </div>
+        )
+        : (
+            feedData.map((talent) => {
+                return <TalentCard key={talent.id} talent={talent} />
+            })
+        );
 
         return (
             <BodyWrapper reload={this.init} loaderData={this.state.loaderData}>
-                <div className="ui container">Your code goes here</div>
+                <div className="ui grid talent-feed container">
+                    <div className="four wide column">
+                        <CompanyProfile />
+                    </div>
+                    <div className="eight wide column">
+                        {talentCards}
+
+                        <div ref={this.observerTarget}> </div>
+                        
+                        {loadingFeedData && <Loader active inline='centered' />}
+                    </div>
+                    <div className="four wide column">
+                        <div className="ui card">
+                            <FollowingSuggestion />
+                        </div>
+                    </div>
+                </div>
             </BodyWrapper>
         )
     }
