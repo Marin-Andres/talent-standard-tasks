@@ -44,12 +44,26 @@ export default class CompanyProfile extends React.Component {
         }) 
     }
 
+    renderProfilePhoto() {
+        const { employerData } = this.state;
+        const profilePhoto = employerData ? employerData.profilePhotoUrl : null;
+
+        if (profilePhoto) {
+            return (
+                <Image avatar src={profilePhoto} alt="Profile Photo" />
+            );
+        } else {
+            return (
+                <Image avatar src="/images/image.png" alt="Profile Photo" />
+            );
+        }
+    }
+
     render() {
         const { isLoading, employerData } = this.state;
         const name = employerData ? employerData.companyContact.name : '';
         const city = employerData ? employerData.companyContact.location.city : '';
         const country = employerData ? employerData.companyContact.location.country : '';
-        const profilePhoto = employerData ? employerData.profilePhotoUrl : null;
         const phone = employerData ? employerData.companyContact.phone : '';
         const email = employerData ? employerData.companyContact.email : '';
         const skills = employerData ? employerData.skills : [];
@@ -64,11 +78,7 @@ export default class CompanyProfile extends React.Component {
             <Card>
                 <Card.Content>
                 <div className="center aligned author">
-                    {profilePhoto ? (
-                        <Image avatar src={profilePhoto} alt="Profile Photo" />
-                    ) : (
-                        <Image avatar src="/images/image.png" alt="Profile Photo" />
-                    )}
+                    {this.renderProfilePhoto()}
                 </div>
                 <div className="center aligned header">{name}</div>
                 <Card.Meta>
