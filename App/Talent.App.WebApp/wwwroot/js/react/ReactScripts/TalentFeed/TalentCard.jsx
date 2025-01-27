@@ -21,6 +21,22 @@ export default class TalentCard extends React.Component {
     showTalentSnapshot() {
         this.setState({ showVideo: false });
     };
+
+    renderSwitchButton() {
+        const { showVideo } = this.state;
+        let { icon, onClick } = { icon: '', onClick: null };
+        if (showVideo) {
+            icon = 'user';
+            onClick = this.showTalentSnapshot;
+        } else {
+            icon = 'video';
+            onClick = this.showVideo;
+        }
+        return (
+            <Button basic icon={icon} onClick={onClick} />
+        );
+        
+    };
     
     render() {
         const talent = this.props.talent;
@@ -30,11 +46,6 @@ export default class TalentCard extends React.Component {
         const skillButtons = skills.map((skill, index) => (
             <Button key={index} basic color='blue'>{skill}</Button>
         ));
-        const switchButton = showVideo ? (
-            <Button basic icon="user" onClick={this.showTalentSnapshot} />
-        ) : (
-            <Button basic icon="video" onClick={this.showVideo} />
-        );
         const talentVideoUrl = null;
         const videoObj = talentVideoUrl ? (
             <ReactPlayer
@@ -97,7 +108,7 @@ export default class TalentCard extends React.Component {
             </Card.Content>
             <Card.Content extra  className={styles['card-content']}>
                 <Button.Group fluid>
-                    {switchButton}
+                    {this.renderSwitchButton()}
                     <Button basic icon="file pdf outline"/>
                     <Button basic icon="linkedin" />
                     <Button basic icon="github" />
