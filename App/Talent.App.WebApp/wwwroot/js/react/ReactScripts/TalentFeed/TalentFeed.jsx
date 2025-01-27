@@ -110,19 +110,25 @@ export default class TalentFeed extends React.Component {
         }
     }
 
-    render() {
-        const {feedData, loadingFeedData} = this.state;
+    renderTalentCards() {
+        const { feedData } = this.state;
 
-        const talentCards = feedData.length === 0 ? (
-            <div className="ui center aligned container">
-                There are no talents found for your recruitment company.
-            </div>
-        )
-        : (
-            feedData.map((talent) => {
-                return <TalentCard key={talent.id} talent={talent} />
-            })
-        );
+        if (feedData.length === 0) {
+            return (
+                <div className="ui center aligned container">
+                    There are no talents found for your recruitment company.
+                </div>
+            );
+        } else {
+            return feedData.map((talent) => {
+                return <TalentCard key={talent.id} talent={talent} />;
+            });
+        }
+       
+    }
+
+    render() {
+        const { loadingFeedData } = this.state;
 
         return (
             <BodyWrapper reload={this.init} loaderData={this.state.loaderData}>
@@ -131,7 +137,7 @@ export default class TalentFeed extends React.Component {
                         <CompanyProfile />
                     </div>
                     <div className="eight wide column">
-                        {talentCards}
+                        {this.renderTalentCards()}
 
                         <div ref={this.observerTarget}> </div>
                         
