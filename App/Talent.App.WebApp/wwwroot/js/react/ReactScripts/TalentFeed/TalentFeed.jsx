@@ -98,12 +98,12 @@ export default class TalentFeed extends React.Component {
                     }
                 }.bind(this),
                 error: function (res) {
-                    console.log(res.status)
+                    //console.log(res.status)
                 } 
             }) 
         }
         catch (err) {
-            console.log('Error fetching talent data:', err);
+            //console.log('Error fetching talent data:', err);
         }
         finally {
             this.setState({ loadingFeedData: false });

@@ -39,7 +39,7 @@ export default class CompanyProfile extends React.Component {
                 });
             }.bind(this),
             error: function (res) {
-                console.log(res.status)
+                //console.log(res.status)
             }
         }) 
     }
